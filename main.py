@@ -24,7 +24,7 @@ import tkinter.filedialog
 #=============================
 #matrice
 #0=rien
-#1=touché
+#1=touchÃ©
 #2=avant bateau h
 #3=milieu bateau h
 #4=arriere bateau h
@@ -80,7 +80,7 @@ if gm==1:
     img1 = window1.create_image(50,50,anchor=NW, image=photo)
     img2 = window2.create_image(50,50,anchor=NW, image=photo)
 
-#Fonction détection souris
+#Fonction dÃ©tection souris
     def pointeur(event):
         casex=str(event.x)/10
         casey=str(event.y)/10
@@ -88,7 +88,7 @@ if gm==1:
             test=test
 
 
-#Détection clic souris
+#DÃ©tection clic souris
 
     window1.bind("<Button-1>", pointeur)
 
@@ -186,12 +186,11 @@ if gm==4:
  #Fenetre de choix
     Largeur = 500
     Hauteur = 500
-    photo = PhotoImage(file="F:/Bataille-navale-vs-ia/EauFond.gif")
+    photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
     window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
     window1.pack(padx =5, pady =5, side=LEFT)
     window3 = Canvas(Mafenetre, width = 100, height =Hauteur, bg ='white')
     window3.pack(padx =5, pady =5, side=LEFT)
-    photo = PhotoImage(file="F:/Bataille-navale-vs-ia/EauFond.gif")
     img1 = window1.create_image(50,50,anchor=NW, image=photo)
 #Lignes horizontale fenetre 1
     window1.create_line(500, 50, 0, 50, width=2)
@@ -237,40 +236,47 @@ if gm==4:
     window1.create_text(25,425,text='8')
     window1.create_text(25,475,text='9')
 
-#Création matrice
+#Creation matrice
     bateaux1=zeros((9,9))
+    bateaux1[8,6]=2
+    bateaux1[8,7]=3
+    bateaux1[8,8]=4
 #Importation images
     #un = PhotoImage(file="")
-    deux = PhotoImage(file="F:/Bataille-navale-vs-ia/avant.gif")
-    trois = PhotoImage(file="F:/Bataille-navale-vs-ia/milieu.gif")
-    quatre = PhotoImage(file="F:/Bataille-navale-vs-ia/arriere.gif")
+    deux = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant.gif")
+    trois = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu.gif")
+    quatre = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere.gif")
     #cinq = PhotoImage(file="")
-    six = PhotoImage(file="F:/Bataille-navale-vs-ia/avant1.gif")
-    sept = PhotoImage(file="F:/Bataille-navale-vs-ia/milieu1.gif")
-    huit = PhotoImage(file="F:/Bataille-navale-vs-ia/arriere1.gif")
+    six = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant1.gif")
+    sept = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu1.gif")
+    huit = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere1.gif")
 #Affichage bateau
-    for x in range(9):
-        for y in range(9):
-            xvoul=x*10+50
-            yvoul=y*10+50
-            if bateaux1[x,y]==1:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=un)
-            elif bateaux1[x,y]==2:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=deux)
-            elif bateaux1[x,y]==3:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=trois)
-            elif bateaux1[x,y]==4:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=quatre)
-            elif bateaux1[x,y]==5:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=cinq)
-            elif bateaux1[x,y]==6:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=six)
-            elif bateaux1[x,y]==7:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=sept)
-            elif bateaux1[x,y]==8:
-                window1.create_image(xvoul,yvoul,anchor=NW, image=huit)
+    for x in range(0,9):
+        for y in range(0,9):
+            xvoul=x*50+50
+            yvoul=y*50+50
+            if bateaux1[y,x]==1:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=un)
+            elif bateaux1[y,x]==2:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=deux)
+            elif bateaux1[y,x]==3:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=trois)
+            elif bateaux1[y,x]==4:
+                print(xvoul)
+                print(yvoul)
+                print(x)
+                print(y)
+                window1.create_image(xvoul,yvoul, anchor=NW, image=quatre)
+            elif bateaux1[y,x]==5:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
+            elif bateaux1[y,x]==6:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=six)
+            elif bateaux1[y,x]==7:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=sept)
+            elif bateaux1[y,x]==8:
+                window1.create_image(xvoul,yvoul, anchor=NW, image=huit)
 
-#Fonction détection souris
+#Fonction detection souris
     def pointeur(event):
         casex=str(event.x)/10
         casey=str(event.y)/10
@@ -280,7 +286,7 @@ if gm==4:
 
 
 
-#Détection clic souris
+#Detection clic souris
 
     window1.bind("<Button-1>", pointeur)
 
