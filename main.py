@@ -15,6 +15,37 @@
 from tkinter import *
 from numpy import *
 import tkinter.filedialog
+#Toutes les fonctions
+#===========================
+
+#Detection souris
+def pointeur(event):
+    casex=str(event.x)/10
+    casey=str(event.y)/10
+    if casex > 0 and casey > 0 :
+        test=test
+
+#Changer gamemode -> 0
+def gm0():
+    gm=0
+#Changer gamemode -> 1
+def gm1():
+    gm=1
+#Changer gamemode -> 2
+def gm2():
+    gm=2
+#Changer gamemode -> 3
+def gm3():
+    gm=3
+#Changer gamemode -> 4
+def gm4():
+    gm=4
+
+#============================
+#window1=Fenetre gauche de jeu
+#window2=Fenetre droite de jeu
+#window3=Fenetre affichage du bateau a placer
+#============================
 #gm = mode de jeu
 #0=Menu
 #1=PvP
@@ -24,7 +55,7 @@ import tkinter.filedialog
 #=============================
 #matrice
 #0=rien
-#1=touchÃ©
+#1=touche
 #2=avant bateau h
 #3=milieu bateau h
 #4=arriere bateau h
@@ -36,7 +67,12 @@ import tkinter.filedialog
 #Variable jeu
 #bateaux1=Matrice J1
 #bateaux2=Matrice J2/IA
-gm=4
+
+try:
+    gm
+except NameError:
+    gm=0
+
 Mafenetre = Tk()
 Mafenetre.title('Bataille navale')
 Mafenetre.geometry('1030x520+200+100')
@@ -44,7 +80,7 @@ Mafenetre.resizable(width=False,height=False)
 menubar = Menu(Mafenetre)
 #barre d'outil
 menufichier = Menu(menubar,tearoff=0)
-menufichier.add_command(label="Menu",command=Mafenetre.destroy)
+menufichier.add_command(label="Menu",command=gm1)
 menufichier.add_command(label="Sauvegarder",command=Mafenetre.destroy)
 menufichier.add_command(label="Importer",command=Mafenetre.destroy)
 menufichier.add_command(label="Quitter",command=Mafenetre.destroy)
@@ -62,7 +98,7 @@ if gm==0:
     Hauteur = 500
     menu = Canvas(Mafenetre, width = Largeur, height = Hauteur, bg ='white')
     menu.pack(padx =10, pady =10, side=LEFT)
-    image = PhotoImage(file="F:/Bataille-navale-vs-ia/bg.gif")
+    image = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
     menu.create_image(0, 0, image = image, anchor = NW)
 
 
@@ -72,7 +108,7 @@ if gm==1:
     #Fenetre de jeu
     Largeur = 500
     Hauteur = 500
-    photo = PhotoImage(file="F:/Bataille-navale-vs-ia/EauFond.gif")
+    photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
     window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
     window1.pack(padx =5, pady =5, side=LEFT)
     window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
@@ -80,15 +116,7 @@ if gm==1:
     img1 = window1.create_image(50,50,anchor=NW, image=photo)
     img2 = window2.create_image(50,50,anchor=NW, image=photo)
 
-#Fonction dÃ©tection souris
-    def pointeur(event):
-        casex=str(event.x)/10
-        casey=str(event.y)/10
-        if casex > 0 and casey > 0 :
-            test=test
-
-
-#DÃ©tection clic souris
+#Detection clic souris
 
     window1.bind("<Button-1>", pointeur)
 
@@ -189,8 +217,8 @@ if gm==4:
     photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
     window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
     window1.pack(padx =5, pady =5, side=LEFT)
-    window3 = Canvas(Mafenetre, width = 100, height =Hauteur, bg ='white')
-    window3.pack(padx =5, pady =5, side=LEFT)
+    window3 = Canvas(Mafenetre, width = 150, height =150, bg ='white')
+    window3.pack(padx =5, pady =5, side=RIGHT)
     img1 = window1.create_image(50,50,anchor=NW, image=photo)
 #Lignes horizontale fenetre 1
     window1.create_line(500, 50, 0, 50, width=2)
@@ -262,10 +290,6 @@ if gm==4:
             elif bateaux1[y,x]==3:
                 window1.create_image(xvoul,yvoul, anchor=NW, image=trois)
             elif bateaux1[y,x]==4:
-                print(xvoul)
-                print(yvoul)
-                print(x)
-                print(y)
                 window1.create_image(xvoul,yvoul, anchor=NW, image=quatre)
             elif bateaux1[y,x]==5:
                 window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
@@ -275,15 +299,6 @@ if gm==4:
                 window1.create_image(xvoul,yvoul, anchor=NW, image=sept)
             elif bateaux1[y,x]==8:
                 window1.create_image(xvoul,yvoul, anchor=NW, image=huit)
-
-#Fonction detection souris
-    def pointeur(event):
-        casex=str(event.x)/10
-        casey=str(event.y)/10
-        if casex > 0 and casey > 0 :
-            casex-=1
-            casey-=1
-
 
 
 #Detection clic souris
