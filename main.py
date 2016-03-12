@@ -100,7 +100,19 @@ if gm==0:
     menu.pack(padx =10, pady =10, side=LEFT)
     image = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
     menu.create_image(0, 0, image = image, anchor = NW)
-
+    BoutonJouer = Button(Mafenetre, text ='Jouer', command = Mafenetre.destroy)
+    BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
+    BoutonImporter = Button(Mafenetre, text ='Importer', command = Mafenetre.destroy)
+    BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
+    BoutonRegles = Button(Mafenetre, text ='Règles', command = Mafenetre.destroy)
+    BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
+    BoutonApropos = Button(Mafenetre, text ='A propos', command = Mafenetre.destroy)
+    BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
+    BoutonQuitter = Button(Mafenetre, text ='Quitter', command = Mafenetre.destroy)
+    BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
+#Creation label
+    LabelBienvenue = Label(Mafenetre, text = 'BIENVENUE !', fg = 'Blue')
+    LabelBienvenue.pack()
 
 
 
