@@ -13,6 +13,7 @@
 
 
 from tkinter import *
+from math import *
 from numpy import *
 import tkinter.filedialog
 #Toutes les fonctions
@@ -20,8 +21,10 @@ import tkinter.filedialog
 
 #Detection souris
 def pointeur(event):
-    test=test
-
+    casex=ceil(float(0.02)*float(str(event.x)))
+    casey=ceil(float(0.02)*float(str(event.y)))
+    if casex>1 and casey>1:
+        print('Ok')
 #============================================================================
 #Creation lignes dans window 1 et window2
 def lignes():
