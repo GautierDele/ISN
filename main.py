@@ -20,10 +20,7 @@ import tkinter.filedialog
 
 #Detection souris
 def pointeur(event):
-    casex=str(event.x)/10
-    casey=str(event.y)/10
-    if casex > 0 and casey > 0 :
-        test=test
+    test=test
 
 #============================================================================
 #Creation lignes dans window 1 et window2
@@ -123,15 +120,10 @@ def gm0():
     window2.delete(ALL)
     #MENU
     window1.create_image(0, 0, image = imagemenu, anchor = NW)
-    BoutonJouer = Button(Mafenetre, text ='Jouer', command = Mafenetre.destroy)
     BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
-    BoutonImporter = Button(Mafenetre, text ='Importer', command = Mafenetre.destroy)
     BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
-    BoutonRegles = Button(Mafenetre, text ='Regles', command = Mafenetre.destroy)
     BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
-    BoutonApropos = Button(Mafenetre, text ='A propos', command = Mafenetre.destroy)
     BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
-    BoutonQuitter = Button(Mafenetre, text ='Quitter', command = Mafenetre.destroy)
     BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
 #Creation label
     LabelBienvenue = Label(Mafenetre, text = 'BIENVENUE !', fg = 'Blue')
@@ -139,6 +131,11 @@ def gm0():
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
+    BoutonJouer.destroy()
+    BoutonImporter.destroy()
+    BoutonRegles.destroy()
+    BoutonApropos.destroy()
+    BoutonQuitter.destroy()
     window1.delete(ALL)
     window2.delete(ALL)
 #Fenetre de jeu
@@ -153,25 +150,38 @@ def gm1():
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
+    BoutonJouer.destroy()
+    BoutonImporter.destroy()
+    BoutonRegles.destroy()
+    BoutonApropos.destroy()
+    BoutonQuitter.destroy()
     window1.delete(ALL)
     window2.delete(ALL)
 #============================================================================
 #Changer gamemode -> 3
 def gm3():
+    BoutonJouer.destroy()
+    BoutonImporter.destroy()
+    BoutonRegles.destroy()
+    BoutonApropos.destroy()
+    BoutonQuitter.destroy()
     window1.delete(ALL)
     window2.delete(ALL)
 #============================================================================
 #Changer gamemode -> 4
 def gm4():
+    global joueur
+    joueur=1
+    BoutonJouer.destroy()
+    BoutonImporter.destroy()
+    BoutonRegles.destroy()
+    BoutonApropos.destroy()
+    BoutonQuitter.destroy()
     window1.delete(ALL)
     window2.delete(ALL)
      #Fenetre de choix
     Largeur = 500
     Hauteur = 500
-    window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
-    window1.pack(padx =5, pady =5, side=LEFT)
-    window3 = Canvas(Mafenetre, width = 150, height =150, bg ='white')
-    window3.pack(padx =5, pady =5, side=RIGHT)
     img1 = window1.create_image(50,50,anchor=NW, image=photo)
     lignes()
 
@@ -180,15 +190,6 @@ def gm4():
     bateaux1[8,6]=2
     bateaux1[8,7]=3
     bateaux1[8,8]=4
-#Importation images
-    #un = PhotoImage(file="")
-    deux = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant.gif")
-    trois = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu.gif")
-    quatre = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere.gif")
-    #cinq = PhotoImage(file="")
-    six = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant1.gif")
-    sept = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu1.gif")
-    huit = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere1.gif")
 #Affichage bateau
     for x in range(0,9):
         for y in range(0,9):
@@ -252,7 +253,7 @@ Mafenetre.resizable(width=False,height=False)
 menubar = Menu(Mafenetre)
 #barre d'outil
 menufichier = Menu(menubar,tearoff=0)
-menufichier.add_command(label="Menu",command=gm0)
+menufichier.add_command(label="Menu",command=gm4)
 menufichier.add_command(label="Sauvegarder",command=Mafenetre.destroy)
 menufichier.add_command(label="Importer",command=Mafenetre.destroy)
 menufichier.add_command(label="Quitter",command=Mafenetre.destroy)
@@ -272,6 +273,20 @@ window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window1.pack(padx =5, pady =5, side=LEFT)
 window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window2.pack(padx =5, pady =5, side=RIGHT)
+BoutonJouer = Button(window2, text ='Jouer', command = Mafenetre.destroy)
+BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
+BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
+BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
+BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
+#Importation images
+#un = PhotoImage(file="")
+deux = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant.gif")
+trois = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu.gif")
+quatre = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere.gif")
+#cinq = PhotoImage(file="")
+six = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant1.gif")
+sept = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu1.gif")
+huit = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere1.gif")
 #=============================
 #PREMIERE FOIS
 imagemenu = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/bg.gif")
