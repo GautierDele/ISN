@@ -25,114 +25,10 @@ def pointeur(event):
     if casex > 0 and casey > 0 :
         test=test
 
-#Changer gamemode -> 0
-def gm0():
-    gm=0
-#Changer gamemode -> 1
-def gm1():
-    gm=1
-#Changer gamemode -> 2
-def gm2():
-    gm=2
-#Changer gamemode -> 3
-def gm3():
-    gm=3
-#Changer gamemode -> 4
-def gm4():
-    gm=4
-
-#============================
-#window1=Fenetre gauche de jeu
-#window2=Fenetre droite de jeu
-#window3=Fenetre affichage du bateau a placer
-#============================
-#gm = mode de jeu
-#0=Menu
-#1=PvP
-#2=PvIA
-#3=Ecran pour patienter
-#4=Placement bateaux + choix
-#=============================
-#matrice
-#0=rien
-#1=touche
-#2=avant bateau h
-#3=milieu bateau h
-#4=arriere bateau h
-#5=a leau
-#6=avant bateau v
-#7=milieu bateau v
-#8=arriere bateau v
-#============================
-#Variable jeu
-#bateaux1=Matrice J1
-#bateaux2=Matrice J2/IA
-
-try:
-    gm
-except NameError:
-    gm=0
-
-Mafenetre = Tk()
-Mafenetre.title('Bataille navale')
-Mafenetre.geometry('1030x520+200+100')
-Mafenetre.resizable(width=False,height=False)
-menubar = Menu(Mafenetre)
-#barre d'outil
-menufichier = Menu(menubar,tearoff=0)
-menufichier.add_command(label="Menu",command=gm1)
-menufichier.add_command(label="Sauvegarder",command=Mafenetre.destroy)
-menufichier.add_command(label="Importer",command=Mafenetre.destroy)
-menufichier.add_command(label="Quitter",command=Mafenetre.destroy)
-menubar.add_cascade(label="Jeu", menu=menufichier)
-
-menuaide = Menu(menubar,tearoff=0)
-menuaide.add_command(label="A propos",command=Mafenetre.destroy)
-menuaide.add_command(label="Regles",command=Mafenetre.destroy)
-menubar.add_cascade(label="Aide", menu=menuaide)
-#affichage barre d'outil
-Mafenetre.config(menu=menubar)
-#Menu
-if gm==0:
-    Largeur = 500
-    Hauteur = 500
-    menu = Canvas(Mafenetre, width = Largeur, height = Hauteur, bg ='white')
-    menu.pack(padx =10, pady =10, side=LEFT)
-    image = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
-    menu.create_image(0, 0, image = image, anchor = NW)
-    BoutonJouer = Button(Mafenetre, text ='Jouer', command = Mafenetre.destroy)
-    BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
-    BoutonImporter = Button(Mafenetre, text ='Importer', command = Mafenetre.destroy)
-    BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
-    BoutonRegles = Button(Mafenetre, text ='Règles', command = Mafenetre.destroy)
-    BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
-    BoutonApropos = Button(Mafenetre, text ='A propos', command = Mafenetre.destroy)
-    BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
-    BoutonQuitter = Button(Mafenetre, text ='Quitter', command = Mafenetre.destroy)
-    BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
-#Creation label
-    LabelBienvenue = Label(Mafenetre, text = 'BIENVENUE !', fg = 'Blue')
-    LabelBienvenue.pack()
-
-
-
-if gm==1:
-    #Fenetre de jeu
-    Largeur = 500
-    Hauteur = 500
-    photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
-    window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
-    window1.pack(padx =5, pady =5, side=LEFT)
-    window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
-    window2.pack(padx =5, pady =5, side=RIGHT)
-    img1 = window1.create_image(50,50,anchor=NW, image=photo)
-    img2 = window2.create_image(50,50,anchor=NW, image=photo)
-
-#Detection clic souris
-
-    window1.bind("<Button-1>", pointeur)
-
-#Lignes horizontale fenetre 1
+#============================================================================
+#Creation lignes dans window 1 et window2
+def lignes():
+    #Lignes horizontale fenetre 1
     window1.create_line(500, 50, 0, 50, width=2)
     window1.create_line(500, 100, 0, 100, width=2)
     window1.create_line(500, 150, 0, 150, width=2)
@@ -221,60 +117,63 @@ if gm==1:
     window2.create_text(25,375,text='7')
     window2.create_text(25,425,text='8')
     window2.create_text(25,475,text='9')
-
-if gm==4:
- #Fenetre de choix
+#Changer gamemode -> 0
+def gm0():
+    window1.delete(ALL)
+    window2.delete(ALL)
+    #MENU
+    window1.create_image(0, 0, image = imagemenu, anchor = NW)
+    BoutonJouer = Button(Mafenetre, text ='Jouer', command = Mafenetre.destroy)
+    BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
+    BoutonImporter = Button(Mafenetre, text ='Importer', command = Mafenetre.destroy)
+    BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
+    BoutonRegles = Button(Mafenetre, text ='Regles', command = Mafenetre.destroy)
+    BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
+    BoutonApropos = Button(Mafenetre, text ='A propos', command = Mafenetre.destroy)
+    BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
+    BoutonQuitter = Button(Mafenetre, text ='Quitter', command = Mafenetre.destroy)
+    BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
+#Creation label
+    LabelBienvenue = Label(Mafenetre, text = 'BIENVENUE !', fg = 'Blue')
+    LabelBienvenue.pack()
+#============================================================================
+#Changer gamemode -> 1
+def gm1():
+    window1.delete(ALL)
+    window2.delete(ALL)
+#Fenetre de jeu
     Largeur = 500
     Hauteur = 500
-    photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
+    img1 = window1.create_image(50,50,anchor=NW, image=photo)
+    img2 = window2.create_image(50,50,anchor=NW, image=photo)
+
+#Detection clic souris
+
+    window1.bind("<Button-1>", pointeur)
+#============================================================================
+#Changer gamemode -> 2
+def gm2():
+    window1.delete(ALL)
+    window2.delete(ALL)
+#============================================================================
+#Changer gamemode -> 3
+def gm3():
+    window1.delete(ALL)
+    window2.delete(ALL)
+#============================================================================
+#Changer gamemode -> 4
+def gm4():
+    window1.delete(ALL)
+    window2.delete(ALL)
+     #Fenetre de choix
+    Largeur = 500
+    Hauteur = 500
     window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
     window1.pack(padx =5, pady =5, side=LEFT)
     window3 = Canvas(Mafenetre, width = 150, height =150, bg ='white')
     window3.pack(padx =5, pady =5, side=RIGHT)
     img1 = window1.create_image(50,50,anchor=NW, image=photo)
-#Lignes horizontale fenetre 1
-    window1.create_line(500, 50, 0, 50, width=2)
-    window1.create_line(500, 100, 0, 100, width=2)
-    window1.create_line(500, 150, 0, 150, width=2)
-    window1.create_line(500, 200, 0, 200, width=2)
-    window1.create_line(500, 250, 0, 250, width=2)
-    window1.create_line(500, 300, 0, 300, width=2)
-    window1.create_line(500, 350, 0, 350, width=2)
-    window1.create_line(500, 400, 0, 400, width=2)
-    window1.create_line(500, 450, 0, 450, width=2)
-
-#Lignes verticale fenetre 1
-    window1.create_line(50, 0, 50, 500, width=2)
-    window1.create_line(100, 0, 100, 500, width=2)
-    window1.create_line(150, 0, 150, 500, width=2)
-    window1.create_line(200, 0, 200, 500, width=2)
-    window1.create_line(250, 0, 250, 500, width=2)
-    window1.create_line(300, 0, 300, 500, width=2)
-    window1.create_line(350, 0, 350, 500, width=2)
-    window1.create_line(400, 0, 400, 500, width=2)
-    window1.create_line(450, 0, 450, 500, width=2)
-
-#Lettres horizontale fenetre 1
-    window1.create_text(75,25,text='A')
-    window1.create_text(125,25,text='B')
-    window1.create_text(175,25,text='C')
-    window1.create_text(225,25,text='D')
-    window1.create_text(275,25,text='E')
-    window1.create_text(325,25,text='F')
-    window1.create_text(375,25,text='G')
-    window1.create_text(425,25,text='H')
-    window1.create_text(475,25,text='I')
-
-#Chiffre vertical fenetre 1
-    window1.create_text(25,75,text='1')
-    window1.create_text(25,125,text='2')
-    window1.create_text(25,175,text='3')
-    window1.create_text(25,225,text='4')
-    window1.create_text(25,275,text='5')
-    window1.create_text(25,325,text='6')
-    window1.create_text(25,375,text='7')
-    window1.create_text(25,425,text='8')
-    window1.create_text(25,475,text='9')
+    lignes()
 
 #Creation matrice
     bateaux1=zeros((9,9))
@@ -317,7 +216,79 @@ if gm==4:
 
     window1.bind("<Button-1>", pointeur)
 
+#==============================================================================
+#window1=Fenetre gauche de jeu
+#window2=Fenetre droite de jeu
+#window3=Fenetre affichage du bateau a placer
+#============================
+#gm = mode de jeu
+#0=Menu
+#1=PvP Tour Joueur 1
+#1'=PvP Tour Joueur 2
+#2=PvIA
+#3=Ecran pour patienter
+#4=Placement bateaux + choix
+#=============================
+#matrice
+#0=rien
+#1=touche
+#2=avant bateau h
+#3=milieu bateau h
+#4=arriere bateau h
+#5=a leau
+#6=avant bateau v
+#7=milieu bateau v
+#8=arriere bateau v
+#============================
+#Variable jeu
+#bateaux1=Matrice J1
+#bateaux2=Matrice J2/IA
+#============================
 
+Mafenetre = Tk()
+Mafenetre.title('Bataille navale')
+Mafenetre.geometry('1030x520+200+100')
+Mafenetre.resizable(width=False,height=False)
+menubar = Menu(Mafenetre)
+#barre d'outil
+menufichier = Menu(menubar,tearoff=0)
+menufichier.add_command(label="Menu",command=gm0)
+menufichier.add_command(label="Sauvegarder",command=Mafenetre.destroy)
+menufichier.add_command(label="Importer",command=Mafenetre.destroy)
+menufichier.add_command(label="Quitter",command=Mafenetre.destroy)
+menubar.add_cascade(label="Jeu", menu=menufichier)
 
+menuaide = Menu(menubar,tearoff=0)
+menuaide.add_command(label="A propos",command=Mafenetre.destroy)
+menuaide.add_command(label="Regles",command=Mafenetre.destroy)
+menubar.add_cascade(label="Aide", menu=menuaide)
+#affichage barre d'outil
+Mafenetre.config(menu=menubar)
+#=============================
+#Définition des canevas
+Largeur=500
+Hauteur=500
+window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
+window1.pack(padx =5, pady =5, side=LEFT)
+window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
+window2.pack(padx =5, pady =5, side=RIGHT)
+#=============================
+#PREMIERE FOIS
+imagemenu = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/bg.gif")
+photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
+window1.create_image(0, 0, image = imagemenu, anchor = NW)
+BoutonJouer = Button(Mafenetre, text ='Jouer', command = Mafenetre.destroy)
+BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
+BoutonImporter = Button(Mafenetre, text ='Importer', command = Mafenetre.destroy)
+BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
+BoutonRegles = Button(Mafenetre, text ='Regles', command = Mafenetre.destroy)
+BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
+BoutonApropos = Button(Mafenetre, text ='A propos', command = Mafenetre.destroy)
+BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
+BoutonQuitter = Button(Mafenetre, text ='Quitter', command = Mafenetre.destroy)
+BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
+#Creation label
+LabelBienvenue = Label(Mafenetre, text = 'BIENVENUE !', fg = 'Blue')
+LabelBienvenue.pack()
 
 Mafenetre.mainloop()
