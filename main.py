@@ -18,7 +18,13 @@ from numpy import *
 import tkinter.filedialog
 #Toutes les fonctions
 #===========================
-
+#Changer mode horizontal -> vertical + vertical-> horizontal
+def mode():
+    global mode
+    if mode=="h":
+        mode="v"
+    else:
+        mode="h"
 #Detection souris J1
 def pointeurJ1(event):
     global bateaux1
@@ -66,45 +72,52 @@ def pointeurJ1(event):
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0:
                         bateaux1[casey-2,casex-2]=2
                         bateaux1[casey-2,casex-1]=4
+                        BoutonAmi.place(relx = 0.6, rely =0.1, anchor = E)
+                        BoutonOrdi.place(relx = 0.6, rely =0.3, anchor = E)
+                        bateau=0
 #MODE VERTICAL
         elif mode=="v":
             if bateau==1:
                 if casey<7:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0 and bateaux1[casey+1,casex-2]==0 and bateaux1[casey+2,casex-2]==0:
-                        bateaux1[casey-2,casex-2]=2
-                        bateaux1[casey-1,casex-2]=3
-                        bateaux1[casey,casex-2]=3
-                        bateaux1[casey+1,casex-2]=3
-                        bateaux1[casey+2,casex-2]=4
+                        bateaux1[casey-2,casex-2]=6
+                        bateaux1[casey-1,casex-2]=7
+                        bateaux1[casey,casex-2]=7
+                        bateaux1[casey+1,casex-2]=7
+                        bateaux1[casey+2,casex-2]=8
                         bateau=2
             elif bateau==2:
                 if casey<8:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0 and bateaux1[casey+1,casex-2]==0:
-                        bateaux1[casey-2,casex-2]=2
-                        bateaux1[casey-1,casex-2]=3
-                        bateaux1[casey,casex-2]=3
-                        bateaux1[casey+1,casex-2]=4
+                        bateaux1[casey-2,casex-2]=6
+                        bateaux1[casey-1,casex-2]=7
+                        bateaux1[casey,casex-2]=7
+                        bateaux1[casey+1,casex-2]=8
                         bateau=3
             elif bateau==3:
                 if casey<9:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0:
-                        bateaux1[casey-2,casex-2]=2
-                        bateaux1[casey-1,casex-2]=3
-                        bateaux1[casey,casex-2]=4
+                        bateaux1[casey-2,casex-2]=6
+                        bateaux1[casey-1,casex-2]=7
+                        bateaux1[casey,casex-2]=8
                         bateau=4
             elif bateau==4:
                 if casey<9:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0:
-                        bateaux1[casey-2,casex-2]=2
-                        bateaux1[casey-1,casex-2]=3
-                        bateaux1[casey,casex-2]=4
+                        bateaux1[casey-2,casex-2]=6
+                        bateaux1[casey-1,casex-2]=7
+                        bateaux1[casey,casex-2]=8
                         bateau=5
             elif bateau==5:
                 if casey<10:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0:
-                        bateaux1[casey-2,casex-2]=2
-                        bateaux1[casey-1,casex-2]=4
+                        bateaux1[casey-2,casex-2]=6
+                        bateaux1[casey-1,casex-2]=8
+                        BoutonAmi.place(relx = 0.6, rely =0.1, anchor = E)
+                        BoutonOrdi.place(relx = 0.6, rely =0.3, anchor = E)
+                        bateau=0
         print(bateaux1)
+        gm4()
 
 #============================================================================
 #Creation lignes dans window 1 et window2
@@ -209,9 +222,6 @@ def gm0():
     BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
     BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
     BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
-#Creation label
-    LabelBienvenue = Label(Mafenetre, text = 'BIENVENUE !', fg = 'Blue')
-    LabelBienvenue.pack()
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
@@ -234,6 +244,9 @@ def gm1():
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
+    BoutonAmi.destroy()
+    BoutonOrdi.destroy()
+    BoutonMode.destroy()
     BoutonJouer.destroy()
     BoutonImporter.destroy()
     BoutonRegles.destroy()
@@ -244,6 +257,9 @@ def gm2():
 #============================================================================
 #Changer gamemode -> 3
 def gm3():
+    BoutonAmi.destroy()
+    BoutonOrdi.destroy()
+    BoutonMode.destroy()
     BoutonJouer.destroy()
     BoutonImporter.destroy()
     BoutonRegles.destroy()
@@ -278,41 +294,69 @@ def gm4():
     #h= horizontal
     #v= vertical
     global mode
-    try:
-        mode
-    except NameError:
-        mode="h"
-
-    img1 = window1.create_image(50,50,anchor=NW, image=photo)
-    lignes1()
 
 #Creation matrice
     global bateaux1
-    bateaux1=zeros((9,9))
-    bateaux1[8,6]=2
-    bateaux1[8,7]=3
-    bateaux1[8,8]=4
+    try:
+        bateaux1
+    except NameError:
+        bateaux1=zeros((9,9))
+
+    global bateaux2
+    try:
+        bateaux2
+    except NameError:
+        bateaux2=zeros((9,9))
+
+    BoutonMode.place(relx = 0.8, rely =0.8, anchor = E)
 #Affichage bateau
-    for x in range(0,9):
-        for y in range(0,9):
-            xvoul=x*50+50
-            yvoul=y*50+50
-            if bateaux1[y,x]==1:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=un)
-            elif bateaux1[y,x]==2:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=deux)
-            elif bateaux1[y,x]==3:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=trois)
-            elif bateaux1[y,x]==4:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=quatre)
-            elif bateaux1[y,x]==5:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
-            elif bateaux1[y,x]==6:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=six)
-            elif bateaux1[y,x]==7:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=sept)
-            elif bateaux1[y,x]==8:
-                window1.create_image(xvoul,yvoul, anchor=NW, image=huit)
+    if joueur==1:
+        for x in range(0,9):
+            for y in range(0,9):
+                xvoul=x*50+50
+                yvoul=y*50+50
+                if bateaux1[y,x]==0:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=zero)
+                elif bateaux1[y,x]==1:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=un)
+                elif bateaux1[y,x]==2:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=deux)
+                elif bateaux1[y,x]==3:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=trois)
+                elif bateaux1[y,x]==4:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=quatre)
+                elif bateaux1[y,x]==5:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
+                elif bateaux1[y,x]==6:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=six)
+                elif bateaux1[y,x]==7:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=sept)
+                elif bateaux1[y,x]==8:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=huit)
+    elif joueur==2:
+        for x in range(0,9):
+            for y in range(0,9):
+                xvoul=x*50+50
+                yvoul=y*50+50
+                if bateaux2[y,x]==0:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=zero)
+                elif bateaux2[y,x]==1:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=un)
+                elif bateaux2[y,x]==2:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=deux)
+                elif bateaux2[y,x]==3:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=trois)
+                elif bateaux2[y,x]==4:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=quatre)
+                elif bateaux2[y,x]==5:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
+                elif bateaux2[y,x]==6:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=six)
+                elif bateaux2[y,x]==7:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=sept)
+                elif bateaux2[y,x]==8:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=huit)
+    lignes1()
 
 
 #Detection clic souris
@@ -387,19 +431,26 @@ BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
 BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
 BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
 BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
+#Boutons gm4
+BoutonMode = Button(window2, text ='Mode', command = mode)
+BoutonAmi = Button(window2, text ='Joueur contre un ami', command = Mafenetre.destroy)
+BoutonOrdi = Button(window2, text ='Jouer contre l\'ordinateur', command = Mafenetre.destroy)
 #Importation images
+zero = PhotoImage(file="E:\ISN/avant1.gif")
 #un = PhotoImage(file="")
-deux = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant.gif")
-trois = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu.gif")
-quatre = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere.gif")
+deux = PhotoImage(file="E:\ISN/avant.gif")
+trois = PhotoImage(file="E:\ISN/milieu.gif")
+quatre = PhotoImage(file="E:\ISN/arriere.gif")
 #cinq = PhotoImage(file="")
-six = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/avant1.gif")
-sept = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/milieu1.gif")
-huit = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/arriere1.gif")
+six = PhotoImage(file="E:\ISN/avant1.gif")
+sept = PhotoImage(file="E:\ISN/milieu1.gif")
+huit = PhotoImage(file="E:\ISN/arriere1.gif")
+#mode de display
+#Changer mode horizontal -> vertical + vertical-> horizontal
+mode="h"
 #=============================
 #PREMIERE FOIS
-imagemenu = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/bg.gif")
-photo = PhotoImage(file="C:/Users\Gautier/Documents/GitHub/ISN/EauFond.gif")
+imagemenu = PhotoImage(file="E:\ISN/bg.gif")
 gm0()
 
 Mafenetre.mainloop()
