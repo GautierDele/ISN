@@ -15,6 +15,7 @@
 from tkinter import *
 from math import *
 from numpy import *
+import time
 import tkinter.filedialog
 #Toutes les fonctions
 #===========================
@@ -82,7 +83,10 @@ def PointeurJeuJ1():
     print(casex)
     print(casey)
     if casex>1 and casey>1:
-        test=1
+        if bateaux2[casey-2,casex-2]==0:
+            bateaux2[casey-2,casex-2]=5
+        elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
+            bateaux2[casey-2,casex-2]=1
 def PointeurJeuJ2():
     global bateaux1
     global bateau
@@ -197,6 +201,8 @@ def pointeurJ1(event):
 
 #Detection souris J2
 def pointeurJ2(event):
+    global texte
+    global temps
     global bateaux2
     global joueur
     global bateau
@@ -246,7 +252,6 @@ def pointeurJ2(event):
                         bateau=0
                         global joueur
                         joueur=1
-                        gm1()
 #MODE VERTICAL
         elif mode=="v":
             if bateau==1:
@@ -289,7 +294,10 @@ def pointeurJ2(event):
                         joueur=1
         print(bateaux2)
         if joueur==1:
-            gm1()
+            BoutonMode.destroy()
+            TourJ1.pack()
+            Restant.pack()
+            wait(5)
         else:
             gm4()
 
@@ -564,6 +572,19 @@ def gm4():
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
 
+#Temps d'attente
+def wait(length):
+    window1.delete(ALL)
+    window2.delete(ALL)
+    start = time.time()
+    running = True
+    while running:
+        if time.time() - start >= length:
+            print("Time's up!")
+            running = False
+        else:
+            print("Only %.1f more seconds!" % (length - (time.time() - start)))
+            Restant.config(text="Only %.1f more seconds!" % (length - (time.time() - start)))
 #==============================================================================
 #window1=Fenetre gauche de jeu
 #window2=Fenetre droite de jeu
@@ -632,23 +653,26 @@ BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
 BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
 BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
 BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
+#Wait
+TourJ1 = Label(window1, text="C'est au tour du joueur 1!")
+Restant = Label(window2)
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
 BoutonOrdi = Button(window2, text ='Jouer contre l\'ordinateur', command = Mafenetre.destroy)
 #Importation images
-zero = PhotoImage(file="E:\ISN/avant1.gif")
+zero = PhotoImage(file="avant1.gif")
 #un = PhotoImage(file="")
-deux = PhotoImage(file="E:\ISN/avant.gif")
-trois = PhotoImage(file="E:\ISN/milieu.gif")
-quatre = PhotoImage(file="E:\ISN/arriere.gif")
+deux = PhotoImage(file="avant.gif")
+trois = PhotoImage(file="milieu.gif")
+quatre = PhotoImage(file="arriere.gif")
 #cinq = PhotoImage(file="")
-six = PhotoImage(file="E:\ISN/avant1.gif")
-sept = PhotoImage(file="E:\ISN/milieu1.gif")
-huit = PhotoImage(file="E:\ISN/arriere1.gif")
+six = PhotoImage(file="avant1.gif")
+sept = PhotoImage(file="milieu1.gif")
+huit = PhotoImage(file="arriere1.gif")
 #mode de display
 mode="h"
-imagemenu = PhotoImage(file="E:\ISN/bg.gif")
+imagemenu = PhotoImage(file="bg.gif")
 gm0()
 
 Mafenetre.mainloop()
