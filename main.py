@@ -17,6 +17,7 @@ from math import *
 from numpy import *
 import time
 import tkinter.filedialog
+from threading import Thread
 #Toutes les fonctions
 #===========================
 #Affichage bateau
@@ -201,10 +202,7 @@ def pointeurJ1(event):
 
 #Detection souris J2
 def pointeurJ2(event):
-    global texte
-    global temps
     global bateaux2
-    global joueur
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
@@ -291,13 +289,12 @@ def pointeurJ2(event):
                         bateaux2[casey-2,casex-2]=6
                         bateaux2[casey-1,casex-2]=8
                         bateau=0
-                        joueur=1
         print(bateaux2)
-        if joueur==1:
+        if bateau==0:
             BoutonMode.destroy()
             TourJ1.pack()
             Restant.pack()
-            wait(5)
+            wait_freeze(5)
         else:
             gm4()
 
@@ -407,6 +404,9 @@ def gm0():
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
+    TourJ2.destroy()
+    TourJ1.destroy()
+    Restant.destroy()
     BoutonAmi.destroy()
     BoutonOrdi.destroy()
     BoutonMode.destroy()
@@ -571,20 +571,26 @@ def gm4():
         window1.bind("<Button-1>", pointeurJ1)
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
+#Temps d'attente sans freeze
+def wait_freeze(duree):
+    th=Thread(target = lambda : wait(duree))
+    th.start()
+    global joueur
+    if joueur==1:
+        joueur=2
+    else:
+        joueur=1
+    return None
 
 #Temps d'attente
-def wait(length):
+def wait(duree):
     window1.delete(ALL)
     window2.delete(ALL)
-    start = time.time()
-    running = True
-    while running:
-        if time.time() - start >= length:
-            print("Time's up!")
-            running = False
-        else:
-            print("Only %.1f more seconds!" % (length - (time.time() - start)))
-            Restant.config(text="Only %.1f more seconds!" % (length - (time.time() - start)))
+    for i in range(duree):
+        message.set(str(duree-i)+"s")
+        time.sleep(1)
+    return None
+
 #==============================================================================
 #window1=Fenetre gauche de jeu
 #window2=Fenetre droite de jeu
@@ -655,7 +661,9 @@ BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
 BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
 #Wait
 TourJ1 = Label(window1, text="C'est au tour du joueur 1!")
-Restant = Label(window2)
+TourJ2 = Label(window1, text="C'est au tour du joueur 2!")
+message=StringVar() ; message.set("Decompte")
+Restant = Label(window2, textvariable=message)
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
