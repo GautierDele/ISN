@@ -85,27 +85,44 @@ def J2():
     gm4()
 
 #Pointeur in game J1
-def PointeurJeuJ1():
+def pointeurJeuJ1(event):
     global bateaux2
+    global joueur
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
     print(casex)
     print(casey)
-    if casex>1 and casey>1:
+    if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
         if bateaux2[casey-2,casex-2]==0:
             bateaux2[casey-2,casex-2]=5
         elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
             bateaux2[casey-2,casex-2]=1
-def PointeurJeuJ2():
+        window1.unbind('<Button-1>')
+        window1.delete(ALL)
+        window2.delete(ALL)
+        window1.create_image(0, 0, image = TourJ2, anchor = NW)
+        window2.after(1, wait, 5, time_is_up2)
+
+#Pointeur in game J2
+def pointeurJeuJ2(event):
     global bateaux1
+    global joueur
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
     print(casex)
     print(casey)
-    if casex>1 and casey>1:
-        test=1
+    if casex>1 and casey>1 and bateaux1[casey-2,casex-2]!=1 and bateaux1[casey-2,casex-2]!=5:
+        if bateaux1[casey-2,casex-2]==0:
+            bateaux1[casey-2,casex-2]=5
+        elif bateaux1[casey-2,casex-2]==2 or bateaux1[casey-2,casex-2]==3 or bateaux1[casey-2,casex-2]==4 or bateaux1[casey-2,casex-2]==6 or bateaux1[casey-2,casex-2]==7 or bateaux1[casey-2,casex-2]==8:
+            bateaux1[casey-2,casex-2]=1
+        window1.unbind('<Button-1>')
+        window1.delete(ALL)
+        window2.delete(ALL)
+        window1.create_image(0, 0, image = TourJ1, anchor = NW)
+        window2.after(1, wait, 5, time_is_up1)
 
 #Detection souris J1
 def pointeurJ1(event):
@@ -204,7 +221,6 @@ def pointeurJ1(event):
 #Detection souris J2
 def pointeurJ2(event):
     global bateaux2
-    global joueur
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
@@ -250,8 +266,6 @@ def pointeurJ2(event):
                         bateaux2[casey-2,casex-2]=2
                         bateaux2[casey-2,casex-1]=4
                         bateau=0
-                        global joueur
-                        joueur=1
 #MODE VERTICAL
         elif mode=="v":
             if bateau==1:
@@ -295,7 +309,8 @@ def pointeurJ2(event):
         if bateau==0:
             BoutonMode.destroy()
             window1.create_image(0, 0, image = TourJ1, anchor = NW)
-            window2.after(1000, wait, 5, time_is_up)
+            window1.unbind('<Button-1>')
+            window2.after(1, wait, 5, time_is_up1)
         else:
             gm4()
 
@@ -397,6 +412,7 @@ def gm0():
     window2.delete(ALL)
     #MENU
     window1.create_image(0, 0, image = imagemenu, anchor = NW)
+    window2.create_image(0, 0, image = imagemenu2, anchor = NW)
     BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
     BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
     BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
@@ -415,6 +431,8 @@ def gm1():
     BoutonQuitter.destroy()
     window1.delete(ALL)
     window2.delete(ALL)
+    global joueur
+    global bateaux1
 
     if joueur==1:
         for x in range(0,9):
@@ -488,9 +506,9 @@ def gm1():
 
 #Detection clic souris
     if joueur==1:
-        window1.bind("<Button-1>", PointeurJeuJ1)
+        window1.bind("<Button-1>", pointeurJeuJ1)
     elif joueur==2:
-        window1.bind("<Button-1>", PointeurJeuJ2)
+        window1.bind("<Button-1>", pointeurJeuJ2)
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
@@ -540,9 +558,9 @@ def gm4():
     except NameError:
         bateau=1
 
-    #mode:
-    #h= horizontal
-    #v= vertical
+#mode:
+#h= horizontal
+#v= vertical
     global mode
 
 #Creation matrice
@@ -588,10 +606,16 @@ def wait(remaining_time, callback):
     else:
         callback()
 
-def time_is_up():
-#Une fois le temps ecoule.
+def time_is_up1():
+#Une fois le temps ecoule
     global joueur
-    joueur==1
+    joueur=1
+    gm1()
+
+def time_is_up2():
+#Une fois le temps ecoule
+    global joueur
+    joueur=2
     gm1()
 
 #==============================================================================
@@ -606,6 +630,15 @@ def time_is_up():
 #2=PvIA
 #3=Ecran pour patienter
 #4=Placement bateaux + choix
+#=============================
+#wait
+#TourJ1 = Image tour du J1
+#TourJ2 = Image tour du J2
+#Restant5 = Image 5
+#Restant4 = Image 4
+#Restant3 = Image 3
+#Restant2 = Image 2
+#Restant1 = Image 1
 #=============================
 #matrice
 #0=rien
@@ -675,18 +708,20 @@ BoutonMode = Button(window2, text ='Mode', command = mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
 BoutonOrdi = Button(window2, text ='Jouer contre l\'ordinateur', command = Mafenetre.destroy)
 #Importation images
-zero = PhotoImage(file="avant1.gif")
-#un = PhotoImage(file="")
+zero = PhotoImage(file="EauFond.gif")
+un = PhotoImage(file="explo.gif")
 deux = PhotoImage(file="avant.gif")
 trois = PhotoImage(file="milieu.gif")
 quatre = PhotoImage(file="arriere.gif")
-#cinq = PhotoImage(file="")
+cinq = PhotoImage(file="plouf.gif")
 six = PhotoImage(file="avant1.gif")
 sept = PhotoImage(file="milieu1.gif")
 huit = PhotoImage(file="arriere1.gif")
 #mode de display
 mode="h"
-imagemenu = PhotoImage(file="bg.gif")
+#images gm0
+imagemenu = PhotoImage(file="gm0w1.gif")
+imagemenu2 = PhotoImage(file="gm0w2resized.gif")
 gm0()
 
 Mafenetre.mainloop()
