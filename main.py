@@ -15,9 +15,7 @@
 from tkinter import *
 from math import *
 from numpy import *
-import time
 import tkinter.filedialog
-from threading import Thread
 #Toutes les fonctions
 #===========================
 #Affichage bateau
@@ -76,6 +74,17 @@ def mode():
         mode="v"
     else:
         mode="h"
+#Joueur vs Joueur
+def J2():
+    global joueur
+    joueur=2
+    global bateau
+    bateau=1
+    BoutonAmi.destroy()
+    BoutonOrdi.destroy()
+    gm4()
+
+#Pointeur in game J1
 def PointeurJeuJ1():
     global bateaux2
     global bateau
@@ -97,15 +106,7 @@ def PointeurJeuJ2():
     print(casey)
     if casex>1 and casey>1:
         test=1
-#Joueur vs Joueur
-def J2():
-    global joueur
-    joueur=2
-    global bateau
-    bateau=1
-    BoutonAmi.destroy()
-    BoutonOrdi.destroy()
-    gm4()
+
 #Detection souris J1
 def pointeurJ1(event):
     global bateaux1
@@ -203,6 +204,7 @@ def pointeurJ1(event):
 #Detection souris J2
 def pointeurJ2(event):
     global bateaux2
+    global joueur
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
@@ -292,9 +294,8 @@ def pointeurJ2(event):
         print(bateaux2)
         if bateau==0:
             BoutonMode.destroy()
-            TourJ1.pack()
-            Restant.pack()
-            wait_freeze(5)
+            window1.create_image(0, 0, image = TourJ1, anchor = NW)
+            window2.after(1000, wait, 5, time_is_up)
         else:
             gm4()
 
@@ -404,9 +405,6 @@ def gm0():
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
-    TourJ2.destroy()
-    TourJ1.destroy()
-    Restant.destroy()
     BoutonAmi.destroy()
     BoutonOrdi.destroy()
     BoutonMode.destroy()
@@ -490,9 +488,9 @@ def gm1():
 
 #Detection clic souris
     if joueur==1:
-        window1.bind("<Button-1>", pointeurJeuJ1)
+        window1.bind("<Button-1>", PointeurJeuJ1)
     elif joueur==2:
-        window1.bind("<Button-1>", pointeurJeuJ2)
+        window1.bind("<Button-1>", PointeurJeuJ2)
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
@@ -571,25 +569,30 @@ def gm4():
         window1.bind("<Button-1>", pointeurJ1)
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
-#Temps d'attente sans freeze
-def wait_freeze(duree):
-    th=Thread(target = lambda : wait(duree))
-    th.start()
-    global joueur
-    if joueur==1:
-        joueur=2
-    else:
-        joueur=1
-    return None
 
 #Temps d'attente
-def wait(duree):
-    window1.delete(ALL)
-    window2.delete(ALL)
-    for i in range(duree):
-        message.set(str(duree-i)+"s")
-        time.sleep(1)
-    return None
+def wait(remaining_time, callback):
+    if remaining_time==5:
+        window2.create_image(10, 10, image = Restant5, anchor = NW)
+    elif remaining_time==4:
+        window2.create_image(10, 10, image = Restant4, anchor = NW)
+    elif remaining_time==3:
+        window2.create_image(10, 10, image = Restant3, anchor = NW)
+    elif remaining_time==2:
+        window2.create_image(10, 10, image = Restant2, anchor = NW)
+    elif remaining_time==1:
+        window2.create_image(10, 10, image = Restant1, anchor = NW)
+    if remaining_time > 0:
+        remaining_time -= 1
+        window2.after(1000, wait, remaining_time, callback)
+    else:
+        callback()
+
+def time_is_up():
+#Une fois le temps ecoule.
+    global joueur
+    joueur==1
+    gm1()
 
 #==============================================================================
 #window1=Fenetre gauche de jeu
@@ -660,10 +663,13 @@ BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
 BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
 BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
 #Wait
-TourJ1 = Label(window1, text="C'est au tour du joueur 1!")
-TourJ2 = Label(window1, text="C'est au tour du joueur 2!")
-message=StringVar() ; message.set("Decompte")
-Restant = Label(window2, textvariable=message)
+TourJ1 = PhotoImage(file="J1.gif")
+TourJ2 = PhotoImage(file="J2.gif")
+Restant5 = PhotoImage(file="5.gif")
+Restant4 = PhotoImage(file="4.gif")
+Restant3 = PhotoImage(file="3.gif")
+Restant2 = PhotoImage(file="2.gif")
+Restant1 = PhotoImage(file="1.gif")
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
