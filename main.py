@@ -94,14 +94,16 @@ def pointeurJeuJ1(event):
     print(casex)
     print(casey)
     if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
-        if bateaux2[casey-2,casex-2]==0:
-            bateaux2[casey-2,casex-2]=5
-        elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
-            bateaux2[casey-2,casex-2]=1
         window1.unbind('<Button-1>')
         window1.delete(ALL)
         window2.delete(ALL)
         window1.create_image(0, 0, image = TourJ2, anchor = NW)
+        if bateaux2[casey-2,casex-2]==0:
+            window1.create_image(250, 450, image = Eau, anchor = CENTER)
+            bateaux2[casey-2,casex-2]=5
+        elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
+            window1.create_image(250, 450, image = Touche, anchor = CENTER)
+            bateaux2[casey-2,casex-2]=1
         window2.after(1, wait, 5, time_is_up2)
 
 #Pointeur in game J2
@@ -114,14 +116,16 @@ def pointeurJeuJ2(event):
     print(casex)
     print(casey)
     if casex>1 and casey>1 and bateaux1[casey-2,casex-2]!=1 and bateaux1[casey-2,casex-2]!=5:
-        if bateaux1[casey-2,casex-2]==0:
-            bateaux1[casey-2,casex-2]=5
-        elif bateaux1[casey-2,casex-2]==2 or bateaux1[casey-2,casex-2]==3 or bateaux1[casey-2,casex-2]==4 or bateaux1[casey-2,casex-2]==6 or bateaux1[casey-2,casex-2]==7 or bateaux1[casey-2,casex-2]==8:
-            bateaux1[casey-2,casex-2]=1
         window1.unbind('<Button-1>')
         window1.delete(ALL)
         window2.delete(ALL)
         window1.create_image(0, 0, image = TourJ1, anchor = NW)
+        if bateaux1[casey-2,casex-2]==0:
+            window1.create_image(250, 450, image = Eau, anchor = CENTER)
+            bateaux1[casey-2,casex-2]=5
+        elif bateaux1[casey-2,casex-2]==2 or bateaux1[casey-2,casex-2]==3 or bateaux1[casey-2,casex-2]==4 or bateaux1[casey-2,casex-2]==6 or bateaux1[casey-2,casex-2]==7 or bateaux1[casey-2,casex-2]==8:
+            window1.create_image(250, 450, image = Touche, anchor = CENTER)
+            bateaux1[casey-2,casex-2]=1
         window2.after(1, wait, 5, time_is_up1)
 
 #Detection souris J1
@@ -696,6 +700,8 @@ BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
 BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
 BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
 #Wait
+Touche = PhotoImage(file="texte1.gif")
+Eau = PhotoImage(file="texte2.gif")
 TourJ1 = PhotoImage(file="J1.gif")
 TourJ2 = PhotoImage(file="J2.gif")
 Restant5 = PhotoImage(file="5.gif")
