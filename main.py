@@ -1,3 +1,4 @@
+# coding: utf8
 #-------------------------------------------------------------------------------
 # Name:        module1
 # Purpose:
@@ -9,8 +10,6 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 #!/usr/bin/env python
-# coding: utf-8
-
 
 from tkinter import *
 from math import *
@@ -734,7 +733,7 @@ menubar.add_cascade(label="Jeu", menu=menufichier)
 
 menuaide = Menu(menubar,tearoff=0)
 menuaide.add_command(label="A propos",command=Mafenetre.destroy)
-menuaide.add_command(label="Regles",command=Mafenetre.destroy)
+menuaide.add_command(label="Règles",command=Mafenetre.destroy)
 menubar.add_cascade(label="Aide", menu=menuaide)
 #affichage barre d'outil
 Mafenetre.config(menu=menubar)
@@ -750,7 +749,7 @@ window2.pack(padx =5, pady =5, side=RIGHT)
 #Boutons Menu
 BoutonJouer = Button(window2, text ='Jouer', command = Mafenetre.destroy)
 BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
-BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
+BoutonRegles = Button(window2, text ='Règles', command = Mafenetre.destroy)
 BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
 BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
 #Wait
