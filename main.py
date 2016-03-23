@@ -68,7 +68,7 @@ def AffichageBateaux():
                 elif bateaux2[y,x]==8:
                     window1.create_image(xvoul,yvoul, anchor=NW, image=huit)
 #Changer mode horizontal -> vertical + vertical-> horizontal
-def mode():
+def Mode():
     global mode
     if mode=="h":
         mode="v"
@@ -80,8 +80,8 @@ def J2():
     joueur=2
     global bateau
     bateau=1
-    BoutonAmi.destroy()
-    BoutonOrdi.destroy()
+    BoutonAmi.place_forget()
+    BoutonOrdi.place_forget()
     gm4()
 
 #Pointeur in game J1
@@ -311,7 +311,7 @@ def pointeurJ2(event):
                         bateau=0
         print(bateaux2)
         if bateau==0:
-            BoutonMode.destroy()
+            reset_affichage()
             window1.create_image(0, 0, image = TourJ1, anchor = NW)
             window1.unbind('<Button-1>')
             window2.after(1, wait, 5, time_is_up1)
@@ -412,8 +412,7 @@ def lignes2():
     window2.create_text(25,475,text='9')
 #Changer gamemode -> 0
 def gm0():
-    window1.delete(ALL)
-    window2.delete(ALL)
+    reset_affichage()
     #MENU
     window1.create_image(0, 0, image = imagemenu, anchor = NW)
     window2.create_image(0, 0, image = imagemenu2, anchor = NW)
@@ -425,19 +424,11 @@ def gm0():
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
-    BoutonAmi.destroy()
-    BoutonOrdi.destroy()
-    BoutonMode.destroy()
-    BoutonJouer.destroy()
-    BoutonImporter.destroy()
-    BoutonRegles.destroy()
-    BoutonApropos.destroy()
-    BoutonQuitter.destroy()
-    window1.delete(ALL)
-    window2.delete(ALL)
+    reset_affichage()
     global joueur
     global bateaux1
 
+    IsBoatLeft=0
     if joueur==1:
         for x in range(0,9):
             for y in range(0,9):
@@ -449,18 +440,24 @@ def gm1():
                     window2.create_image(xvoul,yvoul, anchor=NW, image=un)
                 elif bateaux1[y,x]==2:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=deux)
+                    IsBoatLeft+=1
                 elif bateaux1[y,x]==3:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=trois)
+                    IsBoatLeft+=1
                 elif bateaux1[y,x]==4:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=quatre)
+                    IsBoatLeft+=1
                 elif bateaux1[y,x]==5:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=cinq)
                 elif bateaux1[y,x]==6:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=six)
+                    IsBoatLeft+=1
                 elif bateaux1[y,x]==7:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=sept)
+                    IsBoatLeft+=1
                 elif bateaux1[y,x]==8:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=huit)
+                    IsBoatLeft+=1
         for x in range(0,9):
             for y in range(0,9):
                 xvoul=x*50+50
@@ -482,18 +479,24 @@ def gm1():
                     window2.create_image(xvoul,yvoul, anchor=NW, image=un)
                 elif bateaux2[y,x]==2:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=deux)
+                    IsBoatLeft+=1
                 elif bateaux2[y,x]==3:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=trois)
+                    IsBoatLeft+=1
                 elif bateaux2[y,x]==4:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=quatre)
+                    IsBoatLeft+=1
                 elif bateaux2[y,x]==5:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=cinq)
                 elif bateaux2[y,x]==6:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=six)
+                    IsBoatLeft+=1
                 elif bateaux2[y,x]==7:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=sept)
+                    IsBoatLeft+=1
                 elif bateaux2[y,x]==8:
                     window2.create_image(xvoul,yvoul, anchor=NW, image=huit)
+                    IsBoatLeft+=1
         for x in range(0,9):
             for y in range(0,9):
                 xvoul=x*50+50
@@ -504,9 +507,26 @@ def gm1():
                     window1.create_image(xvoul,yvoul, anchor=NW, image=un)
                 elif bateaux1[y,x]==5:
                     window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
-
+#Lignes window1
     lignes1()
+#Lignes window2
     lignes2()
+
+    if IsBoatLeft==0:
+        if joueur==1:
+#J2WIN
+            window1.unbind('<Button-1>')
+            window1.delete(ALL)
+            window2.delete(ALL)
+            window1.create_image(0, 0, image = J2WIN, anchor = NW)
+            window2.after(1, wait, 5, reset)
+        else:
+#J1WIN
+            window1.unbind('<Button-1>')
+            window1.delete(ALL)
+            window2.delete(ALL)
+            window1.create_image(0, 0, image = J1WIN, anchor = NW)
+            window2.after(1, wait, 5, reset)
 
 #Detection clic souris
     if joueur==1:
@@ -516,39 +536,21 @@ def gm1():
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
-    BoutonAmi.destroy()
-    BoutonOrdi.destroy()
-    BoutonMode.destroy()
-    BoutonJouer.destroy()
-    BoutonImporter.destroy()
-    BoutonRegles.destroy()
-    BoutonApropos.destroy()
-    BoutonQuitter.destroy()
-    window1.delete(ALL)
-    window2.delete(ALL)
+    reset_affichage()
 #============================================================================
-#Changer gamemode -> 3
-def gm3():
-    BoutonAmi.destroy()
-    BoutonOrdi.destroy()
-    BoutonMode.destroy()
-    BoutonJouer.destroy()
-    BoutonImporter.destroy()
-    BoutonRegles.destroy()
-    BoutonApropos.destroy()
-    BoutonQuitter.destroy()
-    window1.delete(ALL)
-    window2.delete(ALL)
 #============================================================================
 #Changer gamemode -> 4
 def gm4():
-    BoutonJouer.destroy()
-    BoutonImporter.destroy()
-    BoutonRegles.destroy()
-    BoutonApropos.destroy()
-    BoutonQuitter.destroy()
+    BoutonJouer.place_forget()
+    BoutonApropos.place_forget()
+    BoutonImporter.place_forget()
+    BoutonMode.place_forget()
+    BoutonQuitter.place_forget()
+    BoutonRegles.place_forget()
+
     window1.delete(ALL)
     window2.delete(ALL)
+
      #Fenetre de choix
     global joueur
     try:
@@ -561,11 +563,6 @@ def gm4():
         bateau
     except NameError:
         bateau=1
-
-#mode:
-#h= horizontal
-#v= vertical
-    global mode
 
 #Creation matrice
     global bateaux1
@@ -621,8 +618,64 @@ def time_is_up2():
     global joueur
     joueur=2
     gm1()
+#Reset boutons
+def reset_affichage():
+    BoutonJouer.place_forget()
+    BoutonAmi.place_forget()
+    BoutonApropos.place_forget()
+    BoutonImporter.place_forget()
+    BoutonMode.place_forget()
+    BoutonOrdi.place_forget()
+    BoutonQuitter.place_forget()
+    BoutonRegles.place_forget()
 
+    window1.delete(ALL)
+    window2.delete(ALL)
+#Reset
+def reset():
+
+    reset_affichage()
+
+    window1.unbind('<Button-1>')
+
+    global joueur,bateaux1,bateaux2,bateau,mode
+#Variable joueur
+    try:
+        joueur
+    except NameError:
+        print("")
+    else:
+        del joueur
+#Matrice bateaux1+2
+    try:
+        bateaux1
+    except NameError:
+        print("")
+    else:
+        del bateaux1
+
+    try:
+        bateaux2
+    except NameError:
+        print("")
+    else:
+        del bateaux2
+#Variable bateau
+    try:
+        bateau
+    except NameError:
+        print("")
+    else:
+        del bateau
+#Mode
+    mode="h"
+
+    gm0()
 #==============================================================================
+#mode:
+#h= horizontal
+#v= vertical
+#============================
 #window1=Fenetre gauche de jeu
 #window2=Fenetre droite de jeu
 #window3=Fenetre affichage du bateau a placer
@@ -632,7 +685,6 @@ def time_is_up2():
 #1=PvP Tour Joueur 1
 #1'=PvP Tour Joueur 2
 #2=PvIA
-#3=Ecran pour patienter
 #4=Placement bateaux + choix
 #=============================
 #wait
@@ -694,6 +746,8 @@ window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window1.pack(padx =5, pady =5, side=LEFT)
 window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window2.pack(padx =5, pady =5, side=RIGHT)
+
+#Boutons Menu
 BoutonJouer = Button(window2, text ='Jouer', command = Mafenetre.destroy)
 BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
 BoutonRegles = Button(window2, text ='Regles', command = Mafenetre.destroy)
@@ -709,8 +763,13 @@ Restant4 = PhotoImage(file="4.gif")
 Restant3 = PhotoImage(file="3.gif")
 Restant2 = PhotoImage(file="2.gif")
 Restant1 = PhotoImage(file="1.gif")
+#Mode de display
+mode="h"
+#WIN
+J1WIN = PhotoImage(file="J1WIN.gif")
+J2WIN = PhotoImage(file="J2WIN.gif")
 #Boutons gm4
-BoutonMode = Button(window2, text ='Mode', command = mode)
+BoutonMode = Button(window2, text ='Mode', command = Mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
 BoutonOrdi = Button(window2, text ='Jouer contre l\'ordinateur', command = Mafenetre.destroy)
 #Importation images
@@ -723,11 +782,10 @@ cinq = PhotoImage(file="plouf.gif")
 six = PhotoImage(file="avant1.gif")
 sept = PhotoImage(file="milieu1.gif")
 huit = PhotoImage(file="arriere1.gif")
-#mode de display
-mode="h"
 #images gm0
 imagemenu = PhotoImage(file="gm0w1.gif")
 imagemenu2 = PhotoImage(file="gm0w2resized.gif")
+#Retour menu
 gm0()
 
 Mafenetre.mainloop()
