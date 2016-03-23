@@ -415,11 +415,11 @@ def gm0():
     #MENU
     window1.create_image(0, 0, image = imagemenu, anchor = NW)
     window2.create_image(0, 0, image = imagemenu2, anchor = NW)
-    BoutonJouer.place(relx = 0.8, rely =0.2, anchor = E)
-    BoutonImporter.place(relx = 0.8, rely =0.27, anchor = E)
-    BoutonRegles.place(relx = 0.8, rely =0.34, anchor = E)
-    BoutonApropos.place(relx = 0.8, rely =0.41, anchor = E)
-    BoutonQuitter.place(relx = 0.8, rely =0.48, anchor = E)
+    BoutonJouer.place(relx = 0.54, rely =0.82, anchor = E)
+    BoutonImporter.place(relx = 0.8, rely =0.77, anchor = E)
+    BoutonRegles.place(relx = 0.3, rely =0.77, anchor = E)
+    BoutonApropos.place(relx = 0.8, rely =0.88, anchor = E)
+    BoutonQuitter.place(relx = 0.3, rely =0.88, anchor = E)
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
