@@ -15,6 +15,7 @@ from tkinter import *
 from math import *
 from numpy import *
 import tkinter.filedialog
+from tkinter.messagebox import *
 #Toutes les fonctions
 #===========================
 #Affichage bateau
@@ -80,7 +81,9 @@ def J2():
     global bateau
     bateau=1
     BoutonAmi.place_forget()
-    BoutonOrdi.place_forget()
+    BoutonFacile.place_forget()
+    BoutonMoyen.place_forget()
+    BoutonDifficile.place_forget()
     gm4()
 
 #Pointeur in game J1
@@ -135,6 +138,8 @@ def pointeurJ1(event):
     casey=ceil(float(0.02)*float(str(event.y)))
     print(casex)
     print(casey)
+    limite=0
+    colision=0
     if casex>1 and casey>1:
 #MODE HORIZONTAL
         if mode=="h":
@@ -147,6 +152,11 @@ def pointeurJ1(event):
                         bateaux1[casey-2,casex+1]=3
                         bateaux1[casey-2,casex+2]=4
                         bateau=2
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==2:
                 if casex<8:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0 and bateaux1[casey-2,casex+1]==0:
@@ -155,6 +165,11 @@ def pointeurJ1(event):
                         bateaux1[casey-2,casex]=3
                         bateaux1[casey-2,casex+1]=4
                         bateau=3
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==3:
                 if casex<9:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0:
@@ -162,6 +177,11 @@ def pointeurJ1(event):
                         bateaux1[casey-2,casex-1]=3
                         bateaux1[casey-2,casex]=4
                         bateau=4
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==4:
                 if casex<9:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0:
@@ -169,14 +189,26 @@ def pointeurJ1(event):
                         bateaux1[casey-2,casex-1]=3
                         bateaux1[casey-2,casex]=4
                         bateau=5
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==5:
                 if casex<10:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0:
                         bateaux1[casey-2,casex-2]=2
                         bateaux1[casey-2,casex-1]=4
                         BoutonAmi.place(relx = 0.6, rely =0.1, anchor = E)
-                        BoutonOrdi.place(relx = 0.6, rely =0.3, anchor = E)
+                        BoutonFacile.place(relx = 0.6, rely =0.3, anchor = E)
+                        BoutonMoyen.place(relx = 0.6, rely =0.5, anchor = E)
+                        BoutonDifficile.place(relx = 0.6, rely =0.7, anchor = E)
                         bateau=0
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
 #MODE VERTICAL
         elif mode=="v":
             if bateau==1:
@@ -188,6 +220,11 @@ def pointeurJ1(event):
                         bateaux1[casey+1,casex-2]=7
                         bateaux1[casey+2,casex-2]=8
                         bateau=2
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==2:
                 if casey<8:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0 and bateaux1[casey+1,casex-2]==0:
@@ -196,6 +233,11 @@ def pointeurJ1(event):
                         bateaux1[casey,casex-2]=7
                         bateaux1[casey+1,casex-2]=8
                         bateau=3
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==3:
                 if casey<9:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0:
@@ -203,6 +245,11 @@ def pointeurJ1(event):
                         bateaux1[casey-1,casex-2]=7
                         bateaux1[casey,casex-2]=8
                         bateau=4
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==4:
                 if casey<9:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0:
@@ -210,16 +257,34 @@ def pointeurJ1(event):
                         bateaux1[casey-1,casex-2]=7
                         bateaux1[casey,casex-2]=8
                         bateau=5
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==5:
                 if casey<10:
                     if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0:
                         bateaux1[casey-2,casex-2]=6
                         bateaux1[casey-1,casex-2]=8
                         BoutonAmi.place(relx = 0.6, rely =0.1, anchor = E)
-                        BoutonOrdi.place(relx = 0.6, rely =0.3, anchor = E)
+                        BoutonFacile.place(relx = 0.6, rely =0.3, anchor = E)
+                        BoutonMoyen.place(relx = 0.6, rely =0.5, anchor = E)
+                        BoutonDifficile.place(relx = 0.6, rely =0.7, anchor = E)
                         bateau=0
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
+        if limite==1:
+            showerror('Erreur', 'Votre bateau sors des limites')
+        if colision==1:
+            showerror('Erreur', 'Votre bateau entre en colision avec un autre')
         print(bateaux1)
         gm4()
+    else:
+        showerror('Erreur', 'Vous n\'êtes pas sur le plateau de jeu')
 
 #Detection souris J2
 def pointeurJ2(event):
@@ -229,6 +294,8 @@ def pointeurJ2(event):
     casey=ceil(float(0.02)*float(str(event.y)))
     print(casex)
     print(casey)
+    limite=0
+    colision=0
     if casex>1 and casey>1:
 #MODE HORIZONTAL
         if mode=="h":
@@ -241,6 +308,11 @@ def pointeurJ2(event):
                         bateaux2[casey-2,casex+1]=3
                         bateaux2[casey-2,casex+2]=4
                         bateau=2
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==2:
                 if casex<8:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0 and bateaux2[casey-2,casex+1]==0:
@@ -249,6 +321,11 @@ def pointeurJ2(event):
                         bateaux2[casey-2,casex]=3
                         bateaux2[casey-2,casex+1]=4
                         bateau=3
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==3:
                 if casex<9:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0:
@@ -256,6 +333,11 @@ def pointeurJ2(event):
                         bateaux2[casey-2,casex-1]=3
                         bateaux2[casey-2,casex]=4
                         bateau=4
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==4:
                 if casex<9:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0:
@@ -263,12 +345,23 @@ def pointeurJ2(event):
                         bateaux2[casey-2,casex-1]=3
                         bateaux2[casey-2,casex]=4
                         bateau=5
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==5:
                 if casex<10:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0:
                         bateaux2[casey-2,casex-2]=2
                         bateaux2[casey-2,casex-1]=4
                         bateau=0
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
+
 #MODE VERTICAL
         elif mode=="v":
             if bateau==1:
@@ -280,6 +373,11 @@ def pointeurJ2(event):
                         bateaux2[casey+1,casex-2]=7
                         bateaux2[casey+2,casex-2]=8
                         bateau=2
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==2:
                 if casey<8:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0 and bateaux2[casey+1,casex-2]==0:
@@ -288,6 +386,11 @@ def pointeurJ2(event):
                         bateaux2[casey,casex-2]=7
                         bateaux2[casey+1,casex-2]=8
                         bateau=3
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==3:
                 if casey<9:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0:
@@ -295,6 +398,11 @@ def pointeurJ2(event):
                         bateaux2[casey-1,casex-2]=7
                         bateaux2[casey,casex-2]=8
                         bateau=4
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==4:
                 if casey<9:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0:
@@ -302,12 +410,27 @@ def pointeurJ2(event):
                         bateaux2[casey-1,casex-2]=7
                         bateaux2[casey,casex-2]=8
                         bateau=5
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
             elif bateau==5:
                 if casey<10:
                     if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0:
                         bateaux2[casey-2,casex-2]=6
                         bateaux2[casey-1,casex-2]=8
                         bateau=0
+                    else:
+                        colision=1
+                else:
+                    limite=1
+
+        if limite==1:
+            showerror('Erreur', 'Votre bateau sors des limites')
+        if colision==1:
+            showerror('Erreur', 'Votre bateau entre en colision avec un autre')
+
         print(bateaux2)
         if bateau==0:
             reset_affichage()
@@ -316,6 +439,9 @@ def pointeurJ2(event):
             window2.after(1, wait, 5, time_is_up1)
         else:
             gm4()
+
+    else:
+        showerror('Erreur', 'Vous n\'êtes pas sur le plateau de jeu')
 
 #============================================================================
 #Creation lignes dans window 1 et window2
@@ -526,12 +652,12 @@ def gm1():
             window2.delete(ALL)
             window1.create_image(0, 0, image = J1WIN, anchor = NW)
             window2.after(1, wait, 5, reset)
-
+    else:
 #Detection clic souris
-    if joueur==1:
-        window1.bind("<Button-1>", pointeurJeuJ1)
-    elif joueur==2:
-        window1.bind("<Button-1>", pointeurJeuJ2)
+        if joueur==1:
+            window1.bind("<Button-1>", pointeurJeuJ1)
+        elif joueur==2:
+            window1.bind("<Button-1>", pointeurJeuJ2)
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
@@ -624,7 +750,9 @@ def reset_affichage():
     BoutonApropos.place_forget()
     BoutonImporter.place_forget()
     BoutonMode.place_forget()
-    BoutonOrdi.place_forget()
+    BoutonFacile.place_forget()
+    BoutonMoyen.place_forget()
+    BoutonDifficile.place_forget()
     BoutonQuitter.place_forget()
     BoutonRegles.place_forget()
 
@@ -745,7 +873,6 @@ window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window1.pack(padx =5, pady =5, side=LEFT)
 window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window2.pack(padx =5, pady =5, side=RIGHT)
-
 #Boutons Menu
 BoutonJouer = Button(window2, text ='Jouer', command = Mafenetre.destroy)
 BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
@@ -770,7 +897,9 @@ J2WIN = PhotoImage(file="J2WIN.gif")
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = Mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
-BoutonOrdi = Button(window2, text ='Jouer contre l\'ordinateur', command = Mafenetre.destroy)
+BoutonFacile = Button(window2, text ='Facile', command = Mafenetre.destroy)
+BoutonMoyen = Button(window2, text ='Moyen', command = Mafenetre.destroy)
+BoutonDifficile = Button(window2, text ='Difficile', command = Mafenetre.destroy)
 #Importation images
 zero = PhotoImage(file="EauFond.gif")
 un = PhotoImage(file="explo.gif")
