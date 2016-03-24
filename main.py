@@ -11,6 +11,7 @@
 #-------------------------------------------------------------------------------
 #!/usr/bin/env python
 
+from random import *
 from tkinter import *
 from math import *
 from numpy import *
@@ -535,6 +536,97 @@ def lignes2():
     window2.create_text(25,375,text='7')
     window2.create_text(25,425,text='8')
     window2.create_text(25,475,text='9')
+
+def IA(degre):
+    reset_affichage()
+    global difficulty
+    global bateaux2
+    bateau=1
+    difficulty=degre
+    bateaux2=zeros((9,9))
+#Génération matrice du bateau
+#bateau1
+    while bateau==1:
+        x=random.choice([0,1,2,3,4,5,6,7,8])
+        y=random.choice([0,1,2,3,4,5,6,7,8])
+        mode=random.choice(["h","v"])
+        if mode=="h":
+            if x<5:
+                    if bateaux2[y,x]==0 and bateaux2[y,x+1]==0 and bateaux2[y,x+2]==0 and bateaux2[y,x+3]==0 and bateaux2[y,x+4]==0:
+                        bateaux2[y,x]=2
+                        bateaux2[y,x+1]=3
+                        bateaux2[y,x+2]=3
+                        bateaux2[y,x+3]=3
+                        bateaux2[y,x+4]=4
+                        bateau=2
+        elif mode=="v":
+            if y<5:
+                    if bateaux2[y,x]==0 and bateaux2[y+1,x]==0 and bateaux2[y+2,x]==0 and bateaux2[y+3,x]==0 and bateaux2[y+4,x]==0:
+                        bateaux2[y,x]=6
+                        bateaux2[y+1,x]=7
+                        bateaux2[y+2,x]=7
+                        bateaux2[y+3,x]=7
+                        bateaux2[y+4,x]=8
+                        bateau=2
+#bateau2
+    while bateau==2:
+        x=random.choice([0,1,2,3,4,5,6,7,8])
+        y=random.choice([0,1,2,3,4,5,6,7,8])
+        mode=random.choice(["h","v"])
+        if mode=="h":
+            if x<6:
+                    if bateaux2[y,x]==0 and bateaux2[y,x+1]==0 and bateaux2[y,x+2]==0 and bateaux2[y,x+3]==0:
+                        bateaux2[y,x]=2
+                        bateaux2[y,x+1]=3
+                        bateaux2[y,x+2]=3
+                        bateaux2[y,x+3]=4
+                        bateau=3
+        elif mode=="v":
+            if y<6:
+                    if bateaux2[y,x]==0 and bateaux2[y+1,x]==0 and bateaux2[y+2,x]==0 and bateaux2[y+3,x]==0:
+                        bateaux2[y,x]=6
+                        bateaux2[y+1,x]=7
+                        bateaux2[y+2,x]=7
+                        bateaux2[y+3,x]=8
+                        bateau=3
+#bateau3+4
+    while bateau==3 or bateau==4:
+        x=random.choice([0,1,2,3,4,5,6,7,8])
+        y=random.choice([0,1,2,3,4,5,6,7,8])
+        mode=random.choice(["h","v"])
+        if mode=="h":
+            if x<7:
+                    if bateaux2[y,x]==0 and bateaux2[y,x+1]==0 and bateaux2[y,x+2]==0:
+                        bateaux2[y,x]=2
+                        bateaux2[y,x+1]=3
+                        bateaux2[y,x+2]=4
+                        bateau+=1
+        elif mode=="v":
+            if y<7:
+                    if bateaux2[y,x]==0 and bateaux2[y+1,x]==0 and bateaux2[y+2,x]==0:
+                        bateaux2[y,x]=6
+                        bateaux2[y+1,x]=7
+                        bateaux2[y+2,x]=8
+                        bateau+=1
+#bateau5
+    while bateau==5:
+        x=random.choice([0,1,2,3,4,5,6,7,8])
+        y=random.choice([0,1,2,3,4,5,6,7,8])
+        mode=random.choice(["h","v"])
+        if mode=="h":
+            if x<8:
+                    if bateaux2[y,x]==0 and bateaux2[y,x+1]==0:
+                        bateaux2[y,x]=2
+                        bateaux2[y,x+1]=4
+                        bateau=0
+        elif mode=="v":
+            if y<8:
+                    if bateaux2[y,x]==0 and bateaux2[y+1,x]==0:
+                        bateaux2[y,x]=6
+                        bateaux2[y+1,x]=8
+                        bateau=0
+    print(bateaux2)
+
 #Changer gamemode -> 0
 def gm0():
     reset_affichage()
@@ -663,7 +755,6 @@ def gm1():
 def gm2():
     reset_affichage()
 #============================================================================
-#============================================================================
 #Changer gamemode -> 4
 def gm4():
     BoutonJouer.place_forget()
@@ -765,7 +856,15 @@ def reset():
 
     window1.unbind('<Button-1>')
 
-    global joueur,bateaux1,bateaux2,bateau,mode
+    global joueur,bateaux1,bateaux2,bateau,mode,difficulty
+
+#Variable difficultee
+    try:
+        difficulty
+    except NameError:
+        print("")
+    else:
+        del difficulty
 #Variable joueur
     try:
         joueur
@@ -838,6 +937,11 @@ def reset():
 #bateaux1=Matrice J1
 #bateaux2=Matrice J2/IA
 #============================
+#Difficulty
+#1=facile
+#2=moyen
+#3=difficile
+#============================
 #Bateaux:
 # 1- 5 cases
 # 2- 4 cases
@@ -897,9 +1001,9 @@ J2WIN = PhotoImage(file="J2WIN.gif")
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = Mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
-BoutonFacile = Button(window2, text ='Facile', command = Mafenetre.destroy)
-BoutonMoyen = Button(window2, text ='Moyen', command = Mafenetre.destroy)
-BoutonDifficile = Button(window2, text ='Difficile', command = Mafenetre.destroy)
+BoutonFacile = Button(window2, text ='Facile', command = lambda : IA(1))
+BoutonMoyen = Button(window2, text ='Moyen', command = lambda : IA(2))
+BoutonDifficile = Button(window2, text ='Difficile', command = lambda : IA(3))
 #Importation images
 zero = PhotoImage(file="EauFond.gif")
 un = PhotoImage(file="explo.gif")
