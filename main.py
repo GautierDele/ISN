@@ -858,6 +858,8 @@ def gm0():
     BoutonRegles.place(relx = 0.3, rely =0.77, anchor = E)
     BoutonApropos.place(relx = 0.8, rely =0.88, anchor = E)
     BoutonQuitter.place(relx = 0.3, rely =0.88, anchor = E)
+    window2.bind("<Button-1>", pointeurMenu)
+
 #============================================================================
 #Changer gamemode -> 1
 def gm1():
