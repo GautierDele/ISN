@@ -814,84 +814,115 @@ def pointeurIAJ1(event):
             y=random.choice([0,1,2,3,4,5,6,7,8])
             if bateaux1[y,x]!=1 and bateaux1[y,x]!=5:
                 FindNothing=0
-            if difficulty==2 or difficulty==3:
-                if xt!=10 and yt!=10:
-                    if x1==0:
-                        x=xt
-                        y=yt
-                        FindNoFire=1
-                        while FindNoFire==1:
-                            x-=1
-                            if x<0 or bateaux1[y,x]==5:
+
+        if difficulty==3 and xt==10 and yt==10:
+            IsShotNear=5
+            while IsShotNear>3:
+                IsShotNear=0
+                if x<=7:
+                    if bateaux1[x+1,y]==5:
+                        IsShotNear+=1
+                if x>=1:
+                    if bateaux1[x-1,y]==5:
+                        IsShotNear+=1
+                if y<=7:
+                    if bateaux1[x,y+1]==5:
+                        IsShotNear+=1
+                if y>=1:
+                    if bateaux1[x,y-1]==5:
+                        IsShotNear+=1
+                if IsShotNear>3:
+                    x=random.choice([0,1,2,3,4,5,6,7,8])
+                    y=random.choice([0,1,2,3,4,5,6,7,8])
+                else:
+                    if bateaux1[y,x]==5 or bateaux1[y,x]==1:
+                        IsShotNear=5
+
+        if difficulty>2:
+            if xt!=10 and yt!=10:
+                if x1==0:
+                    x=xt
+                    y=yt
+                    FindNoFire=1
+                    while FindNoFire==1:
+                        x-=1
+                        if x<0 or bateaux1[y,x]==5:
+                            FindNoFire=0
+                            x1=1
+                            xy=1
+                        else:
+                            if bateaux1[y,x]!=1:
                                 FindNoFire=0
+                    if x>=0:
+                        if difficulty==3:
+                            if bateaux1[y,x]==2:
                                 x1=1
-                                xy=1
-                            else:
-                                if bateaux1[y,x]!=1:
-                                    FindNoFire=0
-                        if x>=0:
-                            if bateaux1[y,x]==0:
-                                x1=1
-                    elif x2==0:
-                        x=xt
-                        y=yt
-                        FindNoFire=1
-                        while FindNoFire==1:
-                            x+=1
-                            if x>8 or bateaux1[y,x]==5:
+                        if bateaux1[y,x]==0:
+                            x1=1
+                elif x2==0:
+                    x=xt
+                    y=yt
+                    FindNoFire=1
+                    while FindNoFire==1:
+                        x+=1
+                        if x>8 or bateaux1[y,x]==5:
+                            FindNoFire=0
+                            x2=1
+                            xy=1
+                        else:
+                            if bateaux1[y,x]!=1:
                                 FindNoFire=0
+                    if x<=8:
+                        if difficulty==3:
+                            if bateaux1[y,x]==4:
                                 x2=1
-                                xy=1
-                            else:
-                                if bateaux1[y,x]!=1:
-                                    FindNoFire=0
-                        if x<=8:
-                            if bateaux1[y,x]==0:
-                                x2=1
-                    elif y1==0:
-                        x=xt
-                        y=yt
-                        FindNoFire=1
-                        while FindNoFire==1:
-                            y-=1
-                            if y<0 or bateaux1[y,x]==5:
+                        if bateaux1[y,x]==0:
+                            x2=1
+                elif y1==0:
+                    x=xt
+                    y=yt
+                    FindNoFire=1
+                    while FindNoFire==1:
+                        y-=1
+                        if y<0 or bateaux1[y,x]==5:
+                            FindNoFire=0
+                            y1=1
+                            xy=1
+                        else:
+                            if bateaux1[y,x]!=1:
                                 FindNoFire=0
+                    if y>=0:
+                        if difficulty==3:
+                            if bateaux1[y,x]==6:
                                 y1=1
-                                xy=1
-                            else:
-                                if bateaux1[y,x]!=1:
-                                    FindNoFire=0
-                        if y>=0:
-                            if bateaux1[y,x]==0:
-                                y1=1
-                    elif y2==0:
-                        x=xt
-                        y=yt
-                        FindNoFire=1
-                        while FindNoFire==1:
-                            y+=1
-                            if y>8 or bateaux1[y,x]==5:
+                        if bateaux1[y,x]==0:
+                            y1=1
+                elif y2==0:
+                    x=xt
+                    y=yt
+                    FindNoFire=1
+                    while FindNoFire==1:
+                        y+=1
+                        if y>8 or bateaux1[y,x]==5:
+                            FindNoFire=0
+                            y2=1
+                            xy=1
+                        else:
+                            if bateaux1[y,x]!=1:
                                 FindNoFire=0
+                    if y<=8:
+                        if difficulty==3:
+                            if bateaux1[y,x]==8:
                                 y2=1
-                                xy=1
-                            else:
-                                if bateaux1[y,x]!=1:
-                                    FindNoFire=0
-                        if y<=8:
-                            if bateaux1[y,x]==0:
-                                xt=10
-                                yt=10
-                                x1=0
-                                x2=0
-                                y1=0
-                                y2=0
-                        elif y2==1:
-                            xt=10
-                            yt=10
-                            x1=0
-                            x2=0
-                            y1=0
-                            y2=0
+                        if bateaux1[y,x]==0:
+                            y2=1
+                if y2==1:
+                    xt=10
+                    yt=10
+                    x1=0
+                    x2=0
+                    y1=0
+                    y2=0
 
         if xy==1:
             FindNothing=1
@@ -1148,6 +1179,24 @@ def gm2():
     lignes2()
 
     window1.bind("<Button-1>", pointeurIAJ1)
+
+    if IsBoatLeftIA==0:
+#IAWIN
+        window1.unbind('<Button-1>')
+        window1.unbind('<Button-3>')
+        window1.delete(ALL)
+        window2.delete(ALL)
+        window1.create_image(0, 0, image = J1WIN, anchor = NW)
+        window2.after(1, wait, 5, reset)
+
+    elif IsBoatLeftJ1==0:
+#J1WIN
+        window1.unbind('<Button-1>')
+        window1.unbind('<Button-3>')
+        window1.delete(ALL)
+        window2.delete(ALL)
+        window1.create_image(0, 0, image = IAWIN, anchor = NW)
+        window2.after(1, wait, 5, reset)
 
 #============================================================================
 #Changer gamemode -> 4
@@ -1447,6 +1496,7 @@ Ghost = PhotoImage(file="ghost.gif")
 mode="h"
 #IA
 IAimage = PhotoImage(file="IA.gif")
+IAWIN = PhotoImage(file="IAWIN.gif")
 #WIN
 J1WIN = PhotoImage(file="J1WIN.gif")
 J2WIN = PhotoImage(file="J2WIN.gif")
