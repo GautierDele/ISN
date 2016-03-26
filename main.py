@@ -829,13 +829,13 @@ def pointeurIAJ1(event):
         DIFFICILE=3
 
     window2.after(1, wait, 2, time_is_up3)
-    
-    
+
+
 def pointeurMenu(event):
     print(event.x)
     print(event.y)
     if event.x>28 and event.y>365 and event.y<415 and event.x<173:
-        print("ok pour rÃ¨gles")
+        print("ok pour règles")
     if event.x>28 and event.y<470 and event.y>415 and event.x<173:
         print("ok pour quitter")
     if event.x>330 and event.y>365 and event.y<415 and event.x<480:
