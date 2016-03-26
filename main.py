@@ -827,6 +827,26 @@ def pointeurIAJ1(event):
         DIFFICILE=3
 
     window2.after(1, wait, 2, time_is_up3)
+    
+    
+def pointeurMenu(event):
+    print(event.x)
+    print(event.y)
+    if event.x>28 and event.y>365 and event.y<415 and event.x<173:
+        print("ok pour rÃ¨gles")
+    if event.x>28 and event.y<470 and event.y>415 and event.x<173:
+        print("ok pour quitter")
+    if event.x>330 and event.y>365 and event.y<415 and event.x<480:
+        print("ok pour importer")
+    if event.x>330 and event.y>415 and event.y<470 and event.x<480:
+        print("ok pour A propos")
+    if event.x>200 and event.x<305 and event.y>374 and event.y<452:
+        print("ok pour Jouer")
+    elif event.x>188 and event.x<315 and event.y>395 and event.y<439:
+        print("ok pour Jouer")
+    elif event.x>223 and event.x<280 and event.y>374 and event.y<468:
+        print("ok pour Jouer")
+
 #Changer gamemode -> 0
 def gm0():
     reset_affichage()
