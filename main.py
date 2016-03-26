@@ -433,6 +433,7 @@ def pointeurJ2(event):
             reset_affichage()
             window1.create_image(0, 0, image = TourJ1, anchor = NW)
             window1.unbind('<Button-1>')
+            window1.unbind('<Button-3>')
             window2.after(1, wait, 5, time_is_up1)
         else:
             gm4()
@@ -699,6 +700,8 @@ def IA(degre):
     reset_affichage()
     global difficulty
     global bateaux2
+    window1.unbind('<Button-3>')
+    window1.unbind('<Button-1>')
     bateau=1
     difficulty=degre
     bateaux2=zeros((9,9))
@@ -784,7 +787,6 @@ def IA(degre):
                         bateaux2[y+1,x]=8
                         bateau=0
     print(bateaux2)
-    window1.unbind('<Button-1>')
     gm2()
 
 def pointeurIAJ1(event):
@@ -1034,7 +1036,8 @@ def gm4():
     BoutonMode.place_forget()
     BoutonQuitter.place_forget()
     BoutonRegles.place_forget()
-
+    window1.unbind('<Button-1>')
+    window1.unbind('<Button-3>')
     window1.delete(ALL)
     window2.delete(ALL)
 
