@@ -75,6 +75,7 @@ def Mode():
         mode="v"
     else:
         mode="h"
+    gm4()
 #Joueur vs Joueur
 def J2():
     global joueur
@@ -1225,7 +1226,26 @@ def gm4():
         bateau
     except NameError:
         bateau=1
-
+    if bateau==1:
+        if mode=="h":
+            window2.create_image(0, 0, image = CinqH, anchor = NW)
+        elif mode=="v":
+            window2.create_image(0, 0, image = CinqV, anchor = NW)
+    elif bateau==2:
+        if mode=="h":
+            window2.create_image(0, 0, image = QuatreH, anchor = NW)
+        elif mode=="v":
+            window2.create_image(0, 0, image = QuatreV, anchor = NW)
+    elif bateau==3 or bateau==4:
+        if mode=="h":
+            window2.create_image(0, 0, image = TroisH, anchor = NW)
+        elif mode=="v":
+            window2.create_image(0, 0, image = TroisV, anchor = NW)
+    elif bateau==5:
+        if mode=="h":
+            window2.create_image(0, 0, image = DeuxH, anchor = NW)
+        elif mode=="v":
+            window2.create_image(0, 0, image = DeuxV, anchor = NW)
 #Creation matrice
     global bateaux1
     try:
@@ -1401,7 +1421,6 @@ def reset():
 #============================
 #window1=Fenetre gauche de jeu
 #window2=Fenetre droite de jeu
-#window3=Fenetre affichage du bateau a placer
 #============================
 #gm = mode de jeu
 #0=Menu
@@ -1496,10 +1515,19 @@ Ghost = PhotoImage(file="ghost.gif")
 mode="h"
 #IA
 IAimage = PhotoImage(file="IA.gif")
-IAWIN = PhotoImage(file="IAWIN.gif")
 #WIN
+IAWIN = PhotoImage(file="IAWIN.gif")
 J1WIN = PhotoImage(file="J1WIN.gif")
 J2WIN = PhotoImage(file="J2WIN.gif")
+#bateaux en entier
+CinqH = PhotoImage(file="5H.gif")
+CinqV = PhotoImage(file="5V.gif")
+QuatreH = PhotoImage(file="4H.gif")
+QuatreV = PhotoImage(file="4V.gif")
+TroisH = PhotoImage(file="3H.gif")
+TroisV = PhotoImage(file="3V.gif")
+DeuxH = PhotoImage(file="2H.gif")
+DeuxV = PhotoImage(file="2V.gif")
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = Mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
