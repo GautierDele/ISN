@@ -90,8 +90,6 @@ def J2():
 #Pointeur in game J1
 def pointeurJeuJ1(event):
     global bateaux2
-    global joueur
-    global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
     print(casex)
@@ -112,8 +110,6 @@ def pointeurJeuJ1(event):
 #Pointeur in game J2
 def pointeurJeuJ2(event):
     global bateaux1
-    global joueur
-    global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
     print(casex)
@@ -788,7 +784,49 @@ def IA(degre):
                         bateaux2[y+1,x]=8
                         bateau=0
     print(bateaux2)
+    window1.unbind('<Button-1>')
+    gm2()
 
+def pointeurIAJ1(event):
+    global bateaux1
+    global bateaux2
+    global difficulty
+    casex=ceil(float(0.02)*float(str(event.x)))
+    casey=ceil(float(0.02)*float(str(event.y)))
+    print(casex)
+    print(casey)
+    if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
+        window1.unbind('<Button-1>')
+        window1.delete(ALL)
+        window2.delete(ALL)
+        window1.create_image(0, 0, image = IAimage, anchor = NW)
+        if bateaux2[casey-2,casex-2]==0:
+            window1.create_image(300, 45, image = Eau, anchor = CENTER)
+            bateaux2[casey-2,casex-2]=5
+        elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
+            window1.create_image(300, 45, image = Touche, anchor = CENTER)
+            bateaux2[casey-2,casex-2]=1
+
+    if difficulty==1:
+        FACILE=1
+    elif difficulty==2:
+        FindNothing=1
+        while FindNothing==1:
+            x=random.choice([0,1,2,3,4,5,6,7,8])
+            y=random.choice([0,1,2,3,4,5,6,7,8])
+            if bateaux1[y,x]!=1 or bateaux1[y,x]!=5:
+                FindNothing=0
+
+        if bateaux1[y,x]==2 or bateaux1[y,x]==3 or bateaux1[y,x]==4 or bateaux1[y,x]==6 or bateaux1[y,x]==7 or bateaux1[y,x]==8:
+            bateaux1[y,x]=1
+            window1.create_image(300, 440, image = Touche, anchor = CENTER)
+        elif bateaux1[y,x]==0:
+            bateaux1[y,x]=5
+            window1.create_image(300, 440, image = Eau, anchor = CENTER)
+    elif difficulty==3:
+        DIFFICILE=3
+
+    window2.after(1, wait, 2, time_is_up3)
 #Changer gamemode -> 0
 def gm0():
     reset_affichage()
@@ -916,6 +954,55 @@ def gm1():
 #Changer gamemode -> 2
 def gm2():
     reset_affichage()
+    IsBoatLeftJ1=0
+    IsBoatLeftIA=0
+    for x in range(0,9):
+        for y in range(0,9):
+            xvoul=x*50+50
+            yvoul=y*50+50
+            if bateaux1[y,x]==0:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=zero)
+            elif bateaux1[y,x]==1:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=un)
+            elif bateaux1[y,x]==2:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=deux)
+                IsBoatLeftJ1+=1
+            elif bateaux1[y,x]==3:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=trois)
+                IsBoatLeftJ1+=1
+            elif bateaux1[y,x]==4:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=quatre)
+                IsBoatLeftJ1+=1
+            elif bateaux1[y,x]==5:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=cinq)
+            elif bateaux1[y,x]==6:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=six)
+                IsBoatLeftJ1+=1
+            elif bateaux1[y,x]==7:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=sept)
+                IsBoatLeftJ1+=1
+            elif bateaux1[y,x]==8:
+                window2.create_image(xvoul,yvoul, anchor=NW, image=huit)
+                IsBoatLeftJ1+=1
+        for x in range(0,9):
+            for y in range(0,9):
+                xvoul=x*50+50
+                yvoul=y*50+50
+                if bateaux2[y,x]==0:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=zero)
+                elif bateaux2[y,x]==2  or bateaux2[y,x]==3 or bateaux2[y,x]==4 or bateaux2[y,x]==6 or bateaux2[y,x]==7 or bateaux2[y,x]==8:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=zero)
+                    IsBoatLeftIA+=1
+                elif bateaux2[y,x]==1:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=un)
+                elif bateaux2[y,x]==5:
+                    window1.create_image(xvoul,yvoul, anchor=NW, image=cinq)
+
+    lignes1()
+    lignes2()
+
+    window1.bind("<Button-1>", pointeurIAJ1)
+
 #============================================================================
 #Changer gamemode -> 4
 def gm4():
@@ -998,6 +1085,11 @@ def time_is_up2():
     global joueur
     joueur=2
     gm1()
+
+def time_is_up3():
+#Une fois le temps ecoule
+    gm2()
+
 #Reset boutons
 def reset_affichage():
     BoutonJouer.place_forget()
@@ -1161,6 +1253,8 @@ Restant1 = PhotoImage(file="1.gif")
 Ghost = PhotoImage(file="ghost.gif")
 #Mode de display
 mode="h"
+#IA
+IAimage = PhotoImage(file="IA.gif")
 #WIN
 J1WIN = PhotoImage(file="J1WIN.gif")
 J2WIN = PhotoImage(file="J2WIN.gif")
