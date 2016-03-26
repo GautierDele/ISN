@@ -910,10 +910,8 @@ def gm1():
 #Detection clic souris
         if joueur==1:
             window1.bind("<Button-1>", pointeurJeuJ1)
-            window1.bind('<Button-3>', imagebateau1)
         elif joueur==2:
             window1.bind("<Button-1>", pointeurJeuJ2)
-            window1.bind('<Button-3>', imagebateau2)
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
@@ -966,8 +964,10 @@ def gm4():
 #Detection clic souris
     if joueur==1:
         window1.bind("<Button-1>", pointeurJ1)
+        window1.bind('<Button-3>', imagebateau1)
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
+        window1.bind('<Button-3>', imagebateau2)
 
 #Temps d'attente
 def wait(remaining_time, callback):
