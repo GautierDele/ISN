@@ -443,7 +443,169 @@ def pointeurJ2(event):
 
     else:
         showerror('Erreur', 'Vous n\'êtes pas sur le plateau de jeu')
+def imagebateau1(event):
+    global bateaux1
+    global bateau
+    gm4()
+    casex=ceil(float(0.02)*float(str(event.x)))
+    casey=ceil(float(0.02)*float(str(event.y)))
+    print(casex)
+    print(casey)
+    if casex>1 and casey>1:
+        xvoul=casex*50-50
+        yvoul=casey*50-50
 
+#MODE HORIZONTAL
+        if mode=="h":
+            if bateau==1:
+                if casex<7:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0 and bateaux1[casey-2,casex+1]==0 and bateaux1[casey-2,casex+2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+150,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+200,yvoul,image=Ghost,anchor=NW)
+            elif bateau==2:
+                if casex<8:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0 and bateaux1[casey-2,casex+1]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+150,yvoul,image=Ghost,anchor=NW)
+            elif bateau==3:
+                if casex<9:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+            elif bateau==4:
+                if casex<9:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0 and bateaux1[casey-2,casex]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+            elif bateau==5:
+                if casex<10:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-2,casex-1]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+#MODE VERTICAL
+        elif mode=="v":
+            if bateau==1:
+                if casey<7:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0 and bateaux1[casey+1,casex-2]==0 and bateaux1[casey+2,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+150,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+200,image=Ghost,anchor=NW)
+            elif bateau==2:
+                if casey<8:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0 and bateaux1[casey+1,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+150,image=Ghost,anchor=NW)
+            elif bateau==3:
+                if casey<9:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+            elif bateau==4:
+                if casey<9:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0 and bateaux1[casey,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+            elif bateau==5:
+                if casey<10:
+                    if bateaux1[casey-2,casex-2]==0 and bateaux1[casey-1,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+    lignes1()
+#Images bateau J2
+def imagebateau2(event):
+    global bateaux2
+    global bateau
+    gm4()
+    casex=ceil(float(0.02)*float(str(event.x)))
+    casey=ceil(float(0.02)*float(str(event.y)))
+    print(casex)
+    print(casey)
+    if casex>1 and casey>1:
+        xvoul=casex*50-50
+        yvoul=casey*50-50
+
+#MODE HORIZONTAL
+        if mode=="h":
+            if bateau==1:
+                if casex<7:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0 and bateaux2[casey-2,casex+1]==0 and bateaux2[casey-2,casex+2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+150,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+200,yvoul,image=Ghost,anchor=NW)
+            elif bateau==2:
+                if casex<8:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0 and bateaux2[casey-2,casex+1]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+150,yvoul,image=Ghost,anchor=NW)
+            elif bateau==3:
+                if casex<9:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+            elif bateau==4:
+                if casex<9:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0 and bateaux2[casey-2,casex]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+100,yvoul,image=Ghost,anchor=NW)
+            elif bateau==5:
+                if casex<10:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-2,casex-1]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul+50,yvoul,image=Ghost,anchor=NW)
+#MODE VERTICAL
+        elif mode=="v":
+            if bateau==1:
+                if casey<7:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0 and bateaux2[casey+1,casex-2]==0 and bateaux2[casey+2,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+150,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+200,image=Ghost,anchor=NW)
+            elif bateau==2:
+                if casey<8:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0 and bateaux2[casey+1,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+150,image=Ghost,anchor=NW)
+            elif bateau==3:
+                if casey<9:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+            elif bateau==4:
+                if casey<9:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0 and bateaux2[casey,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+100,image=Ghost,anchor=NW)
+            elif bateau==5:
+                if casey<10:
+                    if bateaux2[casey-2,casex-2]==0 and bateaux2[casey-1,casex-2]==0:
+                        window1.create_image(xvoul,yvoul,image=Ghost,anchor=NW)
+                        window1.create_image(xvoul,yvoul+50,image=Ghost,anchor=NW)
+    lignes1()
 #============================================================================
 #Creation lignes dans window 1 et window2
 def lignes1():
@@ -748,8 +910,10 @@ def gm1():
 #Detection clic souris
         if joueur==1:
             window1.bind("<Button-1>", pointeurJeuJ1)
+            window1.bind('<Button-3>', imagebateau1)
         elif joueur==2:
             window1.bind("<Button-1>", pointeurJeuJ2)
+            window1.bind('<Button-3>', imagebateau2)
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
@@ -993,6 +1157,8 @@ Restant4 = PhotoImage(file="4.gif")
 Restant3 = PhotoImage(file="3.gif")
 Restant2 = PhotoImage(file="2.gif")
 Restant1 = PhotoImage(file="1.gif")
+#Ghost
+Ghost = PhotoImage(file="ghost.gif")
 #Mode de display
 mode="h"
 #WIN
