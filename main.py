@@ -96,6 +96,7 @@ def pointeurJeuJ1(event):
     print(casey)
     if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
         window1.unbind('<Button-1>')
+        window1.unbind('<Button-3>')
         window1.delete(ALL)
         window2.delete(ALL)
         window1.create_image(0, 0, image = TourJ2, anchor = NW)
@@ -116,6 +117,7 @@ def pointeurJeuJ2(event):
     print(casey)
     if casex>1 and casey>1 and bateaux1[casey-2,casex-2]!=1 and bateaux1[casey-2,casex-2]!=5:
         window1.unbind('<Button-1>')
+        window1.unbind('<Button-3>')
         window1.delete(ALL)
         window2.delete(ALL)
         window1.create_image(0, 0, image = TourJ1, anchor = NW)
@@ -432,8 +434,6 @@ def pointeurJ2(event):
         if bateau==0:
             reset_affichage()
             window1.create_image(0, 0, image = TourJ1, anchor = NW)
-            window1.unbind('<Button-1>')
-            window1.unbind('<Button-3>')
             window2.after(1, wait, 5, time_is_up1)
         else:
             gm4()
@@ -700,8 +700,6 @@ def IA(degre):
     reset_affichage()
     global difficulty
     global bateaux2
-    window1.unbind('<Button-3>')
-    window1.unbind('<Button-1>')
     bateau=1
     difficulty=degre
     bateaux2=zeros((9,9))
@@ -793,12 +791,12 @@ def pointeurIAJ1(event):
     global bateaux1
     global bateaux2
     global difficulty
+    global xt,yt,x1,x2,y1,y2
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
         window1.unbind('<Button-1>')
+        window1.unbind('<Button-3>')
         window1.delete(ALL)
         window2.delete(ALL)
         window1.create_image(0, 0, image = IAimage, anchor = NW)
@@ -808,27 +806,28 @@ def pointeurIAJ1(event):
         elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
             window1.create_image(300, 45, image = Touche, anchor = CENTER)
             bateaux2[casey-2,casex-2]=1
-
-    if difficulty==1:
-        FACILE=1
-    elif difficulty==2:
+#=====================================TEMPORAIRE=======================================
+#xt=x touché
+#yt=y touché
+#x1=verif vers la gauche
+#x2=verif vers la droite
+#y1=verif vers le haut
+#y2=verif vers le bas
         FindNothing=1
         while FindNothing==1:
             x=random.choice([0,1,2,3,4,5,6,7,8])
             y=random.choice([0,1,2,3,4,5,6,7,8])
-            if bateaux1[y,x]!=1 or bateaux1[y,x]!=5:
+            if bateaux1[y,x]!=1 and bateaux1[y,x]!=5:
                 FindNothing=0
-
+        print(bateaux1[y,x])
         if bateaux1[y,x]==2 or bateaux1[y,x]==3 or bateaux1[y,x]==4 or bateaux1[y,x]==6 or bateaux1[y,x]==7 or bateaux1[y,x]==8:
             bateaux1[y,x]=1
             window1.create_image(300, 440, image = Touche, anchor = CENTER)
         elif bateaux1[y,x]==0:
             bateaux1[y,x]=5
             window1.create_image(300, 440, image = Eau, anchor = CENTER)
-    elif difficulty==3:
-        DIFFICILE=3
 
-    window2.after(1, wait, 2, time_is_up3)
+        window2.after(1, wait, 2, gm2)
 
 
 def pointeurMenu(event):
@@ -836,17 +835,13 @@ def pointeurMenu(event):
     print(event.y)
     if event.x>28 and event.y>365 and event.y<415 and event.x<173:
         print("ok pour règles")
-    if event.x>28 and event.y<470 and event.y>415 and event.x<173:
+    elif event.x>28 and event.y<470 and event.y>415 and event.x<173:
         print("ok pour quitter")
-    if event.x>330 and event.y>365 and event.y<415 and event.x<480:
+    elif event.x>330 and event.y>365 and event.y<415 and event.x<480:
         print("ok pour importer")
-    if event.x>330 and event.y>415 and event.y<470 and event.x<480:
+    elif event.x>330 and event.y>415 and event.y<470 and event.x<480:
         print("ok pour A propos")
-    if event.x>200 and event.x<305 and event.y>374 and event.y<452:
-        print("ok pour Jouer")
-    elif event.x>188 and event.x<315 and event.y>395 and event.y<439:
-        print("ok pour Jouer")
-    elif event.x>223 and event.x<280 and event.y>374 and event.y<468:
+    elif (event.x>200 and event.x<305 and event.y>374 and event.y<452) or (event.x>188 and event.x<315 and event.y>395 and event.y<439) or (event.x>223 and event.x<280 and event.y>374 and event.y<468):
         print("ok pour Jouer")
 
 #Changer gamemode -> 0
@@ -855,11 +850,6 @@ def gm0():
     #MENU
     window1.create_image(0, 0, image = imagemenu, anchor = NW)
     window2.create_image(0, 0, image = imagemenu2, anchor = NW)
-    BoutonJouer.place(relx = 0.54, rely =0.82, anchor = E)
-    BoutonImporter.place(relx = 0.8, rely =0.77, anchor = E)
-    BoutonRegles.place(relx = 0.3, rely =0.77, anchor = E)
-    BoutonApropos.place(relx = 0.8, rely =0.88, anchor = E)
-    BoutonQuitter.place(relx = 0.3, rely =0.88, anchor = E)
     window2.bind("<Button-1>", pointeurMenu)
 
 #============================================================================
@@ -957,6 +947,7 @@ def gm1():
         if joueur==1:
 #J2WIN
             window1.unbind('<Button-1>')
+            window1.unbind('<Button-3>')
             window1.delete(ALL)
             window2.delete(ALL)
             window1.create_image(0, 0, image = J2WIN, anchor = NW)
@@ -964,6 +955,7 @@ def gm1():
         else:
 #J1WIN
             window1.unbind('<Button-1>')
+            window1.unbind('<Button-3>')
             window1.delete(ALL)
             window2.delete(ALL)
             window1.create_image(0, 0, image = J1WIN, anchor = NW)
@@ -977,9 +969,47 @@ def gm1():
 #============================================================================
 #Changer gamemode -> 2
 def gm2():
+
+    global xt
+    try:
+        xt
+    except NameError:
+        xt=10
+
+    global yt
+    try:
+        yt
+    except NameError:
+        yt=10
+
+    global x1
+    try:
+        x1
+    except NameError:
+        x1=0
+
+    global x2
+    try:
+        x2
+    except NameError:
+        x2=0
+
+    global y1
+    try:
+        y1
+    except NameError:
+        y1=0
+
+    global y2
+    try:
+        y2
+    except NameError:
+        y2=0
+
     reset_affichage()
     IsBoatLeftJ1=0
     IsBoatLeftIA=0
+
     for x in range(0,9):
         for y in range(0,9):
             xvoul=x*50+50
@@ -1038,6 +1068,7 @@ def gm4():
     BoutonRegles.place_forget()
     window1.unbind('<Button-1>')
     window1.unbind('<Button-3>')
+    window2.unbind('<Button-1>')
     window1.delete(ALL)
     window2.delete(ALL)
 
@@ -1111,22 +1142,18 @@ def time_is_up2():
     joueur=2
     gm1()
 
-def time_is_up3():
-#Une fois le temps ecoule
-    gm2()
-
 #Reset boutons
 def reset_affichage():
-    BoutonJouer.place_forget()
+
     BoutonAmi.place_forget()
-    BoutonApropos.place_forget()
-    BoutonImporter.place_forget()
     BoutonMode.place_forget()
     BoutonFacile.place_forget()
     BoutonMoyen.place_forget()
     BoutonDifficile.place_forget()
-    BoutonQuitter.place_forget()
-    BoutonRegles.place_forget()
+
+    window1.unbind('<Button-1>')
+    window1.unbind('<Button-3>')
+    window2.unbind('<Button-1>')
 
     window1.delete(ALL)
     window2.delete(ALL)
@@ -1135,10 +1162,49 @@ def reset():
 
     reset_affichage()
 
-    window1.unbind('<Button-1>')
-
-    global joueur,bateaux1,bateaux2,bateau,mode,difficulty
-
+    global joueur,bateaux1,bateaux2,bateau,mode,difficulty,xt,yt,x1,x2,y1,y2
+#Variable x touché
+    try:
+        xt
+    except NameError:
+        print("")
+    else:
+        del xt
+#Variable y touché
+    try:
+        yt
+    except NameError:
+        print("")
+    else:
+        del yt
+#Variable difficultee
+    try:
+        x1
+    except NameError:
+        print("")
+    else:
+        del x1
+#Variable difficultee
+    try:
+        x2
+    except NameError:
+        print("")
+    else:
+        del x2
+#Variable difficultee
+    try:
+        y1
+    except NameError:
+        print("")
+    else:
+        del y1
+#Variable difficultee
+    try:
+        y2
+    except NameError:
+        print("")
+    else:
+        del y2
 #Variable difficultee
     try:
         difficulty
