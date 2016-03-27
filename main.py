@@ -841,7 +841,7 @@ def pointeurIAJ1(event):
                     if bateaux1[y,x]==5 or bateaux1[y,x]==1:
                         IsShotNear=5
 
-        if difficulty>2:
+        if difficulty>=2:
             if xt!=10 and yt!=10:
                 if x1==0:
                     x=xt
