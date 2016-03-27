@@ -928,12 +928,35 @@ def pointeurIAJ1(event):
                     y2=0
 
         if xy==1:
-            FindNothing=1
-            while FindNothing==1:
-                x=random.choice([0,1,2,3,4,5,6,7,8])
-                y=random.choice([0,1,2,3,4,5,6,7,8])
-                if bateaux1[y,x]!=1 and bateaux1[y,x]!=5:
-                    FindNothing=0
+            if difficulty==3 and xt==10 and yt==10:
+                IsShotNear=5
+                while IsShotNear>3:
+                    IsShotNear=0
+                    if x<=7:
+                        if bateaux1[x+1,y]==5:
+                            IsShotNear+=1
+                    if x>=1:
+                        if bateaux1[x-1,y]==5:
+                            IsShotNear+=1
+                    if y<=7:
+                        if bateaux1[x,y+1]==5:
+                            IsShotNear+=1
+                    if y>=1:
+                        if bateaux1[x,y-1]==5:
+                            IsShotNear+=1
+                    if IsShotNear>3:
+                        x=random.choice([0,1,2,3,4,5,6,7,8])
+                        y=random.choice([0,1,2,3,4,5,6,7,8])
+                    else:
+                        if bateaux1[y,x]==5 or bateaux1[y,x]==1:
+                            IsShotNear=5
+            else:
+                FindNothing=1
+                while FindNothing==1:
+                    x=random.choice([0,1,2,3,4,5,6,7,8])
+                    y=random.choice([0,1,2,3,4,5,6,7,8])
+                    if bateaux1[y,x]!=1 and bateaux1[y,x]!=5:
+                        FindNothing=0
 
         print(xt)
         print(yt)
