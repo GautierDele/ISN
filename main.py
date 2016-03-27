@@ -17,6 +17,7 @@ from math import *
 from numpy import *
 import tkinter.filedialog
 from tkinter.messagebox import *
+import os
 #Toutes les fonctions
 #===========================
 #Affichage bateau
@@ -203,7 +204,7 @@ def pointeurJ1(event):
                         BoutonFacile.place(relx = 0.6, rely =0.3, anchor = E)
                         BoutonMoyen.place(relx = 0.6, rely =0.5, anchor = E)
                         BoutonDifficile.place(relx = 0.6, rely =0.7, anchor = E)
-                        bateau=0
+                        bateau=10
                     else:
                         colision=1
                 else:
@@ -271,7 +272,7 @@ def pointeurJ1(event):
                         BoutonFacile.place(relx = 0.6, rely =0.3, anchor = E)
                         BoutonMoyen.place(relx = 0.6, rely =0.5, anchor = E)
                         BoutonDifficile.place(relx = 0.6, rely =0.7, anchor = E)
-                        bateau=0
+                        bateau=10
                     else:
                         colision=1
                 else:
@@ -699,6 +700,7 @@ def lignes2():
 
 def IA(degre):
     reset_affichage()
+    global bateau
     global difficulty
     global bateaux2
     bateau=1
@@ -778,13 +780,13 @@ def IA(degre):
                     if bateaux2[y,x]==0 and bateaux2[y,x+1]==0:
                         bateaux2[y,x]=2
                         bateaux2[y,x+1]=4
-                        bateau=0
+                        bateau=10
         elif mode=="v":
             if y<8:
                     if bateaux2[y,x]==0 and bateaux2[y+1,x]==0:
                         bateaux2[y,x]=6
                         bateaux2[y+1,x]=8
-                        bateau=0
+                        bateau=10
     print(bateaux2)
     gm2()
 
@@ -960,15 +962,65 @@ def pointeurMenu(event):
     if event.x>28 and event.y>365 and event.y<415 and event.x<173:
         print("ok pour règles")
     elif event.x>28 and event.y<470 and event.y>415 and event.x<173:
-        print("ok pour quitter")
+        print("ok")
     elif event.x>330 and event.y>365 and event.y<415 and event.x<480:
         print("ok pour importer")
     elif event.x>330 and event.y>415 and event.y<470 and event.x<480:
-        print("ok pour A propos")
+        Mafenetre.destroy()
     elif (event.x>200 and event.x<305 and event.y>374 and event.y<452) or (event.x>188 and event.x<315 and event.y>395 and event.y<439) or (event.x>223 and event.x<280 and event.y>374 and event.y<468):
-        print("ok pour Jouer")
-
-#Changer gamemode -> 0
+        gm4()
+def pointeurSave(event):
+    global bateau
+    global bateaux1
+    global bateaux2
+    print(event.y)
+    if bateau==0:
+        if event.y<166:
+            if askyesno("Sauvegarde 1","Êtes vous sur de vouloir sauvegarder la partie dans le slot 1 ?")==True:
+                os.remove('saves/save1.txt')
+                fichier1 = open("saves/save1.txt", "a")
+                for y in range(0,9):
+                    fichier1.write("\n")
+                    for x in range(0,9):
+                        fichier1.write('%01d' % bateaux1[y,x])
+                fichier1.write("\n")
+                for y in range(0,9):
+                    fichier1.write("\n")
+                    for x in range(0,9):
+                        fichier1.write('%01d' % bateaux2[y,x])
+                fichier1.close()
+        elif event.y>=166 and event.y<=332:
+            if askyesno("Sauvegarde 2","Êtes vous sur de vouloir sauvegarder la partie dans le slot 2 ?")==True:
+                os.remove('saves/save2.txt')
+                fichier2 = open("saves/save2.txt", "a")
+                for y in range(0,9):
+                    fichier2.write("\n")
+                    for x in range(0,9):
+                        fichier2.write('%01d' % bateaux1[y,x])
+                fichier2.write("\n")
+                for y in range(0,9):
+                    fichier2.write("\n")
+                    for x in range(0,9):
+                        fichier2.write('%01d' % bateaux2[y,x])
+                fichier2.close()
+        elif event.y>332:
+            if askyesno("Sauvegarde 3","Êtes vous sur de vouloir sauvegarder la partie dans le slot 3 ?")==True:
+                os.remove('saves/save3.txt')
+                fichier3 = open("saves/save3.txt", "a")
+                for y in range(0,9):
+                    fichier3.write("\n")
+                    for x in range(0,9):
+                        fichier3.write('%01d' % bateaux1[y,x])
+                fichier3.write("\n")
+                for y in range(0,9):
+                    fichier3.write("\n")
+                    for x in range(0,9):
+                        fichier3.write('%01d' % bateaux2[y,x])
+                fichier3.close()
+    else:
+        showerror("Erreur","Une erreur s'est produite vous ne pouvez pas enregistrer cette partie.")
+        reset()
+    #Changer gamemode -> 0
 def gm0():
     reset_affichage()
     #MENU
@@ -1198,6 +1250,27 @@ def gm2():
         window2.delete(ALL)
         window1.create_image(0, 0, image = IAWIN, anchor = NW)
         window2.after(1, wait, 5, reset)
+#============================================================================
+#Changer gamemode -> 3
+def gm3():
+    global bateaux1
+    global bateaux2
+    Test=0
+    try:
+        bateaux1
+    except NameError:
+        Test+=1
+    try:
+        bateaux2
+    except NameError:
+        Test+=1
+
+    if Test==0:
+        reset_affichage()
+        window1.create_image(0, 0, image = SaveFond, anchor = NW)
+        window1.bind("<Button-1>", pointeurSave)
+    else:
+        reset()
 
 #============================================================================
 #Changer gamemode -> 4
@@ -1427,6 +1500,7 @@ def reset():
 #1=PvP Tour Joueur 1
 #1'=PvP Tour Joueur 2
 #2=PvIA
+#3=Sauvegarder
 #4=Placement bateaux + choix
 #=============================
 #wait
@@ -1473,8 +1547,8 @@ Mafenetre.resizable(width=False,height=False)
 menubar = Menu(Mafenetre)
 #barre d'outil
 menufichier = Menu(menubar,tearoff=0)
-menufichier.add_command(label="Menu",command=gm4)
-menufichier.add_command(label="Sauvegarder",command=Mafenetre.destroy)
+menufichier.add_command(label="Menu",command=reset)
+menufichier.add_command(label="Sauvegarder",command=gm3)
 menufichier.add_command(label="Importer",command=Mafenetre.destroy)
 menufichier.add_command(label="Quitter",command=Mafenetre.destroy)
 menubar.add_cascade(label="Jeu", menu=menufichier)
@@ -1528,6 +1602,8 @@ TroisH = PhotoImage(file="3H.gif")
 TroisV = PhotoImage(file="3V.gif")
 DeuxH = PhotoImage(file="2H.gif")
 DeuxV = PhotoImage(file="2V.gif")
+#Save
+SaveFond = PhotoImage(file="SaveFond.gif")
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = Mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
