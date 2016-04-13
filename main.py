@@ -1368,6 +1368,27 @@ def gm4():
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
         window1.bind('<Button-3>', imagebateau2)
+        
+#============================================================================
+#Changer gamemode -> 6
+def gm6():
+    global bateaux1
+    global bateaux2
+    Test=0
+    try:
+        bateaux1
+    except NameError:
+        Test+=1
+    else:
+        if askyesno("","Êtes vous sur de vouloir importer une partie ?")==True:
+            Test+=1
+    if Test!=0:
+        reset()
+        reset_affichage()
+        window1.create_image(0, 0, image = SaveFond, anchor = NW)
+        window1.bind("<Button-1>", pointeurImporter)
+
+
 
 #Temps d'attente
 def wait(remaining_time, callback):
@@ -1572,7 +1593,7 @@ menubar = Menu(Mafenetre)
 menufichier = Menu(menubar,tearoff=0)
 menufichier.add_command(label="Menu",command=reset)
 menufichier.add_command(label="Sauvegarder",command=gm3)
-menufichier.add_command(label="Importer",command=Mafenetre.destroy)
+menufichier.add_command(label="Importer",command=gm6)
 menufichier.add_command(label="Quitter",command=Mafenetre.destroy)
 menubar.add_cascade(label="Jeu", menu=menufichier)
 
