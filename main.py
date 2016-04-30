@@ -985,7 +985,7 @@ def pointeurMenu(event):
     if event.x>28 and event.y>365 and event.y<415 and event.x<173:
         print("ok pour règles")
     elif event.x>28 and event.y<470 and event.y>415 and event.x<173:
-        print("ok")
+        gm5(2)
     elif event.x>330 and event.y>365 and event.y<415 and event.x<480:
         print("ok pour importer")
     elif event.x>330 and event.y>415 and event.y<470 and event.x<480:
@@ -1368,7 +1368,36 @@ def gm4():
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
         window1.bind('<Button-3>', imagebateau2)
-        
+#============================================================================
+#Changer gamemode -> 5
+def gm5(pageRF):
+    Boutonsuivant.place_forget()
+    Boutonprec.place_forget()
+    global pageR
+    if pageRF==4:
+        pageR-=1
+    elif pageRF==3:
+        pageR+=1
+    else:
+        page=1
+    Test=0
+    global bateaux1
+    try:
+        bateaux1
+    except NameError:
+        Test=1
+    else:
+        if askyesno("Règles","Êtes vous sur de vouloir accéder aux règles ? Votre partie sera effacée.")==True:
+            Test=1
+    if Test==1:
+        reset_affichage()
+        if pageR==1:
+            window1.create_image( 0, 0, image = regle1, anchor = NW)
+            window2.create_image(0, 0, image = regle2, anchor = NW)
+            Boutonsuivant.place(relx = 0.89, rely =0.94, anchor = NW)
+        elif pageR==2:
+            window1.create_image( 0, 0, image = regle3, anchor = NW)
+            Boutonprec.place(relx =0.87, rely =0.94, anchor = NW)
 #============================================================================
 #Changer gamemode -> 6
 def gm6():
@@ -1599,7 +1628,7 @@ menubar.add_cascade(label="Jeu", menu=menufichier)
 
 menuaide = Menu(menubar,tearoff=0)
 menuaide.add_command(label="A propos",command=Mafenetre.destroy)
-menuaide.add_command(label="Règles",command=Mafenetre.destroy)
+menuaide.add_command(label="Règles",command= lambda : gm5(2))
 menubar.add_cascade(label="Aide", menu=menuaide)
 #affichage barre d'outil
 Mafenetre.config(menu=menubar)
@@ -1664,9 +1693,18 @@ cinq = PhotoImage(file="plouf.gif")
 six = PhotoImage(file="avant1.gif")
 sept = PhotoImage(file="milieu1.gif")
 huit = PhotoImage(file="arriere1.gif")
+regle1 = PhotoImage(file="page1.gif")
+regle2 = PhotoImage(file="page2.gif")
+regle3 = PhotoImage(file="page3.gif")
 #images gm0
 imagemenu = PhotoImage(file="gm0w1.gif")
 imagemenu2 = PhotoImage(file="gm0w2resized.gif")
+#page
+#3 page+=1
+#4 page-=1
+pageR=1
+Boutonsuivant = Button(window2, text = 'Suivant', command= lambda : gm5(3))
+Boutonprec = Button(window2, text = 'Precedant', command= lambda : gm5(4))
 #Retour menu
 gm0()
 
