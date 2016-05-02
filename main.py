@@ -1672,12 +1672,6 @@ window1 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window1.pack(padx =5, pady =5, side=LEFT)
 window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window2.pack(padx =5, pady =5, side=RIGHT)
-#Boutons Menu
-BoutonJouer = Button(window2, text ='Jouer', command = Mafenetre.destroy)
-BoutonImporter = Button(window2, text ='Importer', command = Mafenetre.destroy)
-BoutonRegles = Button(window2, text ='Règles', command = Mafenetre.destroy)
-BoutonApropos = Button(window2, text ='A propos', command = Mafenetre.destroy)
-BoutonQuitter = Button(window2, text ='Quitter', command = Mafenetre.destroy)
 #Wait
 Touche = PhotoImage(file="texte1.gif")
 Eau = PhotoImage(file="texte2.gif")
