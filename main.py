@@ -977,9 +977,10 @@ def pointeurIAJ1(event):
                     if IsShotNear>3:
                         x=random.choice([0,1,2,3,4,5,6,7,8])
                         y=random.choice([0,1,2,3,4,5,6,7,8])
-                    else:
-                        if bateaux1[y,x]==5 or bateaux1[y,x]==1:
-                            IsShotNear=5
+                    elif bateaux1[y,x]==5 or bateaux1[y,x]==1:
+                        IsShotNear=5
+                        x=random.choice([0,1,2,3,4,5,6,7,8])
+                        y=random.choice([0,1,2,3,4,5,6,7,8])
 #Sinon on tire aléatoirement
             else:
                 FindNothing=1
@@ -1331,12 +1332,6 @@ def gm3():
 #============================================================================
 #Changer gamemode -> 4
 def gm4():
-    BoutonJouer.place_forget()
-    BoutonApropos.place_forget()
-    BoutonImporter.place_forget()
-    BoutonMode.place_forget()
-    BoutonQuitter.place_forget()
-    BoutonRegles.place_forget()
     window1.unbind('<Button-1>')
     window1.unbind('<Button-3>')
     window2.unbind('<Button-1>')
