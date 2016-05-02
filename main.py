@@ -789,16 +789,32 @@ def IA(degre):
                         bateau=10
     print(bateaux2)
     gm2()
-
+#=================================================================================
+# PointeurIAJ1
+# Variables:
+# bateaux1: Matrice bateau 1
+# bateaux2: Matrice bateau 2
+# difficulty: difficultée de l'IA
+# xt: coordonnées bateau touché en x
+# yt: coordonnées bateau touché en y
+# x1: vérification plus de bateau sur la gauche
+# x2: vérification plus de bateau sur la droite
+# y1: vérification plus de bateau vers le haut
+# y2: vérification plus de bateau vers le bas
+# xy: retirer si la case que l'on s'apprête a tester est déjà touchée/à l'eau
+# IsShotNear: IA difficultée difficile: Vérifie si il ne tire pas inutilement
+#=================================================================================
 def pointeurIAJ1(event):
     global bateaux1
     global bateaux2
     global difficulty
     global xt,yt,x1,x2,y1,y2
     xy=0
+#Gestion du tir du joueur
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
     if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
+#On prépare la fenêtre d'attente
         window1.unbind('<Button-1>')
         window1.unbind('<Button-3>')
         window1.delete(ALL)
@@ -810,16 +826,18 @@ def pointeurIAJ1(event):
         elif bateaux2[casey-2,casex-2]==2 or bateaux2[casey-2,casex-2]==3 or bateaux2[casey-2,casex-2]==4 or bateaux2[casey-2,casex-2]==6 or bateaux2[casey-2,casex-2]==7 or bateaux2[casey-2,casex-2]==8:
             window1.create_image(300, 45, image = Touche, anchor = CENTER)
             bateaux2[casey-2,casex-2]=1
-
+#==============================PARTIE IA===========================================
+#Tir aléatoire
         FindNothing=1
         while FindNothing==1:
             x=random.choice([0,1,2,3,4,5,6,7,8])
             y=random.choice([0,1,2,3,4,5,6,7,8])
             if bateaux1[y,x]!=1 and bateaux1[y,x]!=5:
                 FindNothing=0
-
+#Si difficultée est difficile + on a pas touché de bateaux, on vérifie où l'on tir
         if difficulty==3 and xt==10 and yt==10:
             IsShotNear=5
+#Tant qu'il y a 4 cases à l'eau autour
             while IsShotNear>3:
                 IsShotNear=0
                 if x<=7:
@@ -835,18 +853,22 @@ def pointeurIAJ1(event):
                     if bateaux1[x,y-1]==5:
                         IsShotNear+=1
                 if IsShotNear>3:
+#On change le x et le y si trop de cases à l'eau autour
                     x=random.choice([0,1,2,3,4,5,6,7,8])
                     y=random.choice([0,1,2,3,4,5,6,7,8])
                 else:
+#Si c'est une case touchée ou à l'eau on recommence
                     if bateaux1[y,x]==5 or bateaux1[y,x]==1:
                         IsShotNear=5
-
+#Si difficultée est moyen ou difficile et qu'un bateau à été touché, on traque ce bateau
         if difficulty>=2:
             if xt!=10 and yt!=10:
+#Vérification vers la gauche
                 if x1==0:
                     x=xt
                     y=yt
                     FindNoFire=1
+#On va vers la gauche en partant de la case de départ jusqu'à une case non touchée
                     while FindNoFire==1:
                         x-=1
                         if x<0 or bateaux1[y,x]==5:
@@ -862,10 +884,12 @@ def pointeurIAJ1(event):
                                 x1=1
                         if bateaux1[y,x]==0:
                             x1=1
+#Vérification vers la droite
                 elif x2==0:
                     x=xt
                     y=yt
                     FindNoFire=1
+#On va vers la droite en partant de la case de départ jusqu'à une case non touchée
                     while FindNoFire==1:
                         x+=1
                         if x>8 or bateaux1[y,x]==5:
@@ -881,10 +905,12 @@ def pointeurIAJ1(event):
                                 x2=1
                         if bateaux1[y,x]==0:
                             x2=1
+#Vérification vers le haut
                 elif y1==0:
                     x=xt
                     y=yt
                     FindNoFire=1
+#On va vers le haut en partant de la case de départ jusqu'à une case non touchée
                     while FindNoFire==1:
                         y-=1
                         if y<0 or bateaux1[y,x]==5:
@@ -900,10 +926,12 @@ def pointeurIAJ1(event):
                                 y1=1
                         if bateaux1[y,x]==0:
                             y1=1
+#Vérification vers le bas
                 elif y2==0:
                     x=xt
                     y=yt
                     FindNoFire=1
+#On va vers le bas en partant de la case de départ jusqu'à une case non touchée
                     while FindNoFire==1:
                         y+=1
                         if y>8 or bateaux1[y,x]==5:
@@ -919,6 +947,7 @@ def pointeurIAJ1(event):
                                 y2=1
                         if bateaux1[y,x]==0:
                             y2=1
+#Je reset les variables de l'IA si j'ai fini de vérifier
                 if y2==1:
                     xt=10
                     yt=10
@@ -926,8 +955,9 @@ def pointeurIAJ1(event):
                     x2=0
                     y1=0
                     y2=0
-
+#Si je dois tirer aléatoiremenet car soucis (Voir en haut)
         if xy==1:
+#On ne tire pas aléatoirement si difficultée difficile
             if difficulty==3 and xt==10 and yt==10:
                 IsShotNear=5
                 while IsShotNear>3:
@@ -950,6 +980,7 @@ def pointeurIAJ1(event):
                     else:
                         if bateaux1[y,x]==5 or bateaux1[y,x]==1:
                             IsShotNear=5
+#Sinon on tire aléatoirement
             else:
                 FindNothing=1
                 while FindNothing==1:
@@ -965,17 +996,19 @@ def pointeurIAJ1(event):
         print(y1)
         print(y2)
         print(bateaux1[y,x])
+#On regarde la ou on a tirer
         if bateaux1[y,x]==2 or bateaux1[y,x]==3 or bateaux1[y,x]==4 or bateaux1[y,x]==6 or bateaux1[y,x]==7 or bateaux1[y,x]==8:
             bateaux1[y,x]=1
             if difficulty==2 or difficulty ==3:
                 if xt==10 and yt==10:
+#On le rentre dans une variable si on est pas déjà en train de traquer un bateau
                     xt=x
                     yt=y
             window1.create_image(300, 440, image = Touche, anchor = CENTER)
         elif bateaux1[y,x]==0:
             bateaux1[y,x]=5
             window1.create_image(300, 440, image = Eau, anchor = CENTER)
-
+#On attend 2 secondes
         window2.after(1, wait, 2, gm2)
 
 
@@ -1368,6 +1401,7 @@ def gm4():
     elif joueur==2:
         window1.bind("<Button-1>", pointeurJ2)
         window1.bind('<Button-3>', imagebateau2)
+
 #============================================================================
 #Changer gamemode -> 5
 def gm5(pageRF):
@@ -1416,8 +1450,6 @@ def gm6():
         reset_affichage()
         window1.create_image(0, 0, image = SaveFond, anchor = NW)
         window1.bind("<Button-1>", pointeurImporter)
-
-
 
 #Temps d'attente
 def wait(remaining_time, callback):
@@ -1693,6 +1725,7 @@ cinq = PhotoImage(file="plouf.gif")
 six = PhotoImage(file="avant1.gif")
 sept = PhotoImage(file="milieu1.gif")
 huit = PhotoImage(file="arriere1.gif")
+#images règles
 regle1 = PhotoImage(file="regle1.gif")
 regle2 = PhotoImage(file="regle2.gif")
 regle3 = PhotoImage(file="regle3.gif")
