@@ -94,8 +94,6 @@ def pointeurJeuJ1(event):
     global bateaux2
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     if casex>1 and casey>1 and bateaux2[casey-2,casex-2]!=1 and bateaux2[casey-2,casex-2]!=5:
         window1.unbind('<Button-1>')
         window1.unbind('<Button-3>')
@@ -115,8 +113,6 @@ def pointeurJeuJ2(event):
     global bateaux1
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     if casex>1 and casey>1 and bateaux1[casey-2,casex-2]!=1 and bateaux1[casey-2,casex-2]!=5:
         window1.unbind('<Button-1>')
         window1.unbind('<Button-3>')
@@ -137,8 +133,6 @@ def pointeurJ1(event):
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     limite=0
     colision=0
     if casex>1 and casey>1:
@@ -282,7 +276,6 @@ def pointeurJ1(event):
             showerror('Erreur', 'Votre bateau sors des limites')
         if colision==1:
             showerror('Erreur', 'Votre bateau entre en colision avec un autre')
-        print(bateaux1)
         gm4()
     else:
         showerror('Erreur', 'Vous n\'êtes pas sur le plateau de jeu')
@@ -293,8 +286,6 @@ def pointeurJ2(event):
     global bateau
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     limite=0
     colision=0
     if casex>1 and casey>1:
@@ -432,7 +423,6 @@ def pointeurJ2(event):
         if colision==1:
             showerror('Erreur', 'Votre bateau entre en colision avec un autre')
 
-        print(bateaux2)
         if bateau==0:
             reset_affichage()
             window1.create_image(0, 0, image = TourJ1, anchor = NW)
@@ -448,8 +438,6 @@ def imagebateau1(event):
     gm4()
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     if casex>1 and casey>1:
         xvoul=casex*50-50
         yvoul=casey*50-50
@@ -530,8 +518,6 @@ def imagebateau2(event):
     gm4()
     casex=ceil(float(0.02)*float(str(event.x)))
     casey=ceil(float(0.02)*float(str(event.y)))
-    print(casex)
-    print(casey)
     if casex>1 and casey>1:
         xvoul=casex*50-50
         yvoul=casey*50-50
@@ -787,7 +773,6 @@ def IA(degre):
                         bateaux2[y,x]=6
                         bateaux2[y+1,x]=8
                         bateau=10
-    print(bateaux2)
     gm2()
 #=================================================================================
 # PointeurIAJ1
@@ -990,13 +975,6 @@ def pointeurIAJ1(event):
                     if bateaux1[y,x]!=1 and bateaux1[y,x]!=5:
                         FindNothing=0
 
-        print(xt)
-        print(yt)
-        print(x1)
-        print(x2)
-        print(y1)
-        print(y2)
-        print(bateaux1[y,x])
 #On regarde la ou on a tirer
         if bateaux1[y,x]==2 or bateaux1[y,x]==3 or bateaux1[y,x]==4 or bateaux1[y,x]==6 or bateaux1[y,x]==7 or bateaux1[y,x]==8:
             bateaux1[y,x]=1
@@ -1014,10 +992,8 @@ def pointeurIAJ1(event):
 
 
 def pointeurMenu(event):
-    print(event.x)
-    print(event.y)
     if event.x>28 and event.y>365 and event.y<415 and event.x<173:
-        print("ok pour règles")
+        gm6()
     elif event.x>28 and event.y<470 and event.y>415 and event.x<173:
         gm5(2)
     elif event.x>330 and event.y>365 and event.y<415 and event.x<480:
@@ -1026,53 +1002,102 @@ def pointeurMenu(event):
         Mafenetre.destroy()
     elif (event.x>200 and event.x<305 and event.y>374 and event.y<452) or (event.x>188 and event.x<315 and event.y>395 and event.y<439) or (event.x>223 and event.x<280 and event.y>374 and event.y<468):
         gm4()
+
+def pointeurImporter(event):
+    global bateau,joueur,bateaux1,bateaux2
+    if event.y<166:
+        if askyesno("Sauvegarde 1","Êtes vous sur de vouloir importer la partie du slot 1 ?")==True:
+            fichier1 = open("saves/save1.txt", "r")
+            bateaux1=zeros((9,9))
+            bateaux2=zeros((9,9))
+            for y in range(0,9):
+                for x in range(0,9):
+                    char = fichier1.read(1)
+                    bateaux1[y,x]=char
+            for y in range(0,9):
+                for x in range(0,9):
+                    char = fichier1.read(1)
+                    bateaux2[y,x]=char
+            joueur=fichier1.read(1)
+            fichier1.close()
+    elif event.y>=166 and event.y<=332:
+        if askyesno("Sauvegarde 2","Êtes vous sur de vouloir importer la partie du slot 2 ?")==True:
+            fichier2 = open("saves/save2.txt", "r")
+            bateaux1=zeros((9,9))
+            bateaux2=zeros((9,9))
+            for y in range(0,9):
+                for x in range(0,9):
+                    char = fichier2.read(1)
+                    bateaux1[y,x]=char
+            for y in range(0,9):
+                for x in range(0,9):
+                    char = fichier2.read(1)
+                    bateaux2[y,x]=char
+            joueur=fichier2.read(1)
+            fichier2.close()
+    elif event.y>332:
+        if askyesno("Sauvegarde 3","Êtes vous sur de vouloir importer la partie du slot 3 ?")==True:
+            fichier3 = open("saves/save3.txt", "r")
+            bateaux1=zeros((9,9))
+            bateaux2=zeros((9,9))
+            for y in range(0,9):
+                for x in range(0,9):
+                    char = fichier3.read(1)
+                    bateaux1[y,x]=char
+            for y in range(0,9):
+                for x in range(0,9):
+                    char = fichier3.read(1)
+                    bateaux2[y,x]=char
+            joueur=fichier3.read(1)
+            fichier3.close()
+    reset_affichage()
+    if joueur=="1":
+        window1.create_image(0, 0, image = TourJ1, anchor = NW)
+        window2.after(1, wait, 3, time_is_up1)
+    elif joueur=="2":
+        window1.create_image(0, 0, image = TourJ2, anchor = NW)
+        window2.after(1, wait, 3, time_is_up2)
+    else:
+        showerror("Erreur","Erreur lors de l'importation de la partie")
+        reset()
+
 def pointeurSave(event):
     global bateau
     global bateaux1
     global bateaux2
-    print(event.y)
     if bateau==0:
         if event.y<166:
             if askyesno("Sauvegarde 1","Êtes vous sur de vouloir sauvegarder la partie dans le slot 1 ?")==True:
-                os.remove('saves/save1.txt')
-                fichier1 = open("saves/save1.txt", "a")
+                fichier1 = open("saves/save1.txt", "w")
                 for y in range(0,9):
-                    fichier1.write("\n")
                     for x in range(0,9):
                         fichier1.write('%01d' % bateaux1[y,x])
-                fichier1.write("\n")
                 for y in range(0,9):
-                    fichier1.write("\n")
                     for x in range(0,9):
                         fichier1.write('%01d' % bateaux2[y,x])
+                fichier1.write(str(joueur))
                 fichier1.close()
         elif event.y>=166 and event.y<=332:
             if askyesno("Sauvegarde 2","Êtes vous sur de vouloir sauvegarder la partie dans le slot 2 ?")==True:
-                os.remove('saves/save2.txt')
-                fichier2 = open("saves/save2.txt", "a")
+                fichier2 = open("saves/save2.txt", "w")
                 for y in range(0,9):
-                    fichier2.write("\n")
                     for x in range(0,9):
                         fichier2.write('%01d' % bateaux1[y,x])
-                fichier2.write("\n")
                 for y in range(0,9):
-                    fichier2.write("\n")
                     for x in range(0,9):
                         fichier2.write('%01d' % bateaux2[y,x])
+                fichier2.write(str(joueur))
                 fichier2.close()
         elif event.y>332:
             if askyesno("Sauvegarde 3","Êtes vous sur de vouloir sauvegarder la partie dans le slot 3 ?")==True:
-                os.remove('saves/save3.txt')
-                fichier3 = open("saves/save3.txt", "a")
+                fichier3 = open("saves/save3.txt", "w")
                 for y in range(0,9):
-                    fichier3.write("\n")
                     for x in range(0,9):
                         fichier3.write('%01d' % bateaux1[y,x])
-                fichier3.write("\n")
                 for y in range(0,9):
-                    fichier3.write("\n")
                     for x in range(0,9):
                         fichier3.write('%01d' % bateaux2[y,x])
+                fichier3.write(str(joueur))
                 fichier3.close()
     else:
         showerror("Erreur","Une erreur s'est produite vous ne pouvez pas enregistrer cette partie.")
@@ -1325,6 +1350,7 @@ def gm3():
     if Test==0:
         reset_affichage()
         window1.create_image(0, 0, image = SaveFond, anchor = NW)
+        window2.create_image(0, 0, image = Save, anchor = NW)
         window1.bind("<Button-1>", pointeurSave)
     else:
         reset()
@@ -1386,6 +1412,7 @@ def gm4():
     BoutonMode.place(relx = 0.8, rely =0.8, anchor = E)
 
     AffichageBateaux()
+    window2.create_image(0, 0, image = Instruc, anchor = NW)
 
     lignes1()
 
@@ -1444,6 +1471,7 @@ def gm6():
         reset()
         reset_affichage()
         window1.create_image(0, 0, image = SaveFond, anchor = NW)
+        window2.create_image(0, 0, image = Import, anchor = NW)
         window1.bind("<Button-1>", pointeurImporter)
 
 #Temps d'attente
@@ -1668,36 +1696,38 @@ window1.pack(padx =5, pady =5, side=LEFT)
 window2 = Canvas(Mafenetre, width = Largeur, height =Hauteur, bg ='white')
 window2.pack(padx =5, pady =5, side=RIGHT)
 #Wait
-Touche = PhotoImage(file="texte1.gif")
-Eau = PhotoImage(file="texte2.gif")
-TourJ1 = PhotoImage(file="J1.gif")
-TourJ2 = PhotoImage(file="J2.gif")
-Restant5 = PhotoImage(file="5.gif")
-Restant4 = PhotoImage(file="4.gif")
-Restant3 = PhotoImage(file="3.gif")
-Restant2 = PhotoImage(file="2.gif")
-Restant1 = PhotoImage(file="1.gif")
+Touche = PhotoImage(file="img/texte1.gif")
+Eau = PhotoImage(file="img/texte2.gif")
+TourJ1 = PhotoImage(file="img/J1.gif")
+TourJ2 = PhotoImage(file="img/J2.gif")
+Restant5 = PhotoImage(file="img/5.gif")
+Restant4 = PhotoImage(file="img/4.gif")
+Restant3 = PhotoImage(file="img/3.gif")
+Restant2 = PhotoImage(file="img/2.gif")
+Restant1 = PhotoImage(file="img/1.gif")
 #Ghost
-Ghost = PhotoImage(file="ghost.gif")
+Ghost = PhotoImage(file="img/ghost.gif")
 #Mode de display
 mode="h"
 #IA
-IAimage = PhotoImage(file="IA.gif")
+IAimage = PhotoImage(file="img/IA.gif")
 #WIN
-IAWIN = PhotoImage(file="IAWIN.gif")
-J1WIN = PhotoImage(file="J1WIN.gif")
-J2WIN = PhotoImage(file="J2WIN.gif")
+IAWIN = PhotoImage(file="img/IAWIN.gif")
+J1WIN = PhotoImage(file="img/J1WIN.gif")
+J2WIN = PhotoImage(file="img/J2WIN.gif")
 #bateaux en entier
-CinqH = PhotoImage(file="5H.gif")
-CinqV = PhotoImage(file="5V.gif")
-QuatreH = PhotoImage(file="4H.gif")
-QuatreV = PhotoImage(file="4V.gif")
-TroisH = PhotoImage(file="3H.gif")
-TroisV = PhotoImage(file="3V.gif")
-DeuxH = PhotoImage(file="2H.gif")
-DeuxV = PhotoImage(file="2V.gif")
+CinqH = PhotoImage(file="img/5H.gif")
+CinqV = PhotoImage(file="img/5V.gif")
+QuatreH = PhotoImage(file="img/4H.gif")
+QuatreV = PhotoImage(file="img/4V.gif")
+TroisH = PhotoImage(file="img/3H.gif")
+TroisV = PhotoImage(file="img/3V.gif")
+DeuxH = PhotoImage(file="img/2H.gif")
+DeuxV = PhotoImage(file="img/2V.gif")
 #Save
-SaveFond = PhotoImage(file="SaveFond.gif")
+SaveFond = PhotoImage(file="img/SaveFond.gif")
+Save = PhotoImage(file="img/Save.gif")
+Import = PhotoImage(file="img/Importer.gif")
 #Boutons gm4
 BoutonMode = Button(window2, text ='Mode', command = Mode)
 BoutonAmi = Button(window2, text ='Joueur contre un ami', command = J2)
@@ -1705,28 +1735,30 @@ BoutonFacile = Button(window2, text ='Facile', command = lambda : IA(1))
 BoutonMoyen = Button(window2, text ='Moyen', command = lambda : IA(2))
 BoutonDifficile = Button(window2, text ='Difficile', command = lambda : IA(3))
 #Importation images
-zero = PhotoImage(file="EauFond.gif")
-un = PhotoImage(file="explo.gif")
-deux = PhotoImage(file="avant.gif")
-trois = PhotoImage(file="milieu.gif")
-quatre = PhotoImage(file="arriere.gif")
-cinq = PhotoImage(file="plouf.gif")
-six = PhotoImage(file="avant1.gif")
-sept = PhotoImage(file="milieu1.gif")
-huit = PhotoImage(file="arriere1.gif")
+zero = PhotoImage(file="img/EauFond.gif")
+un = PhotoImage(file="img/explo.gif")
+deux = PhotoImage(file="img/avant.gif")
+trois = PhotoImage(file="img/milieu.gif")
+quatre = PhotoImage(file="img/arriere.gif")
+cinq = PhotoImage(file="img/plouf.gif")
+six = PhotoImage(file="img/avant1.gif")
+sept = PhotoImage(file="img/milieu1.gif")
+huit = PhotoImage(file="img/arriere1.gif")
 #images règles
-regle1 = PhotoImage(file="regle1.gif")
-regle2 = PhotoImage(file="regle2.gif")
-regle3 = PhotoImage(file="regle3.gif")
+regle1 = PhotoImage(file="img/regle1.gif")
+regle2 = PhotoImage(file="img/regle2.gif")
+regle3 = PhotoImage(file="img/regle3.gif")
 #images gm0
-imagemenu = PhotoImage(file="gm0w1.gif")
-imagemenu2 = PhotoImage(file="gm0w2resized.gif")
+imagemenu = PhotoImage(file="img/gm0w1.gif")
+imagemenu2 = PhotoImage(file="img/gm0w2resized.gif")
+#image gm4
+Instruc = PhotoImage(file="img/Instruc.gif")
 #page
 #3 page+=1
 #4 page-=1
 pageR=1
 Boutonsuivant = Button(window2, text = 'Suivant', command= lambda : gm5(3))
-Boutonprec = Button(window2, text = 'Precedant', command= lambda : gm5(4))
+Boutonprec = Button(window2, text = 'Précedent', command= lambda : gm5(4))
 #Retour menu
 gm0()
 
