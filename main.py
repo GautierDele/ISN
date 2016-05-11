@@ -1376,6 +1376,7 @@ def gm4():
         bateau
     except NameError:
         bateau=1
+    window2.create_image(0, 0, image = Instruc, anchor = NW)
     if bateau==1:
         if mode=="h":
             window2.create_image(0, 0, image = CinqH, anchor = NW)
@@ -1412,7 +1413,6 @@ def gm4():
     BoutonMode.place(relx = 0.8, rely =0.8, anchor = E)
 
     AffichageBateaux()
-    window2.create_image(0, 0, image = Instruc, anchor = NW)
 
     lignes1()
 
