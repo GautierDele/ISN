@@ -127,7 +127,7 @@ def pointeurJeuJ2(event):
             bateaux1[casey-2,casex-2]=1
         window2.after(1, wait, 5, time_is_up1)
 
-#Detection souris J1
+#Detection souris J1 pour placer les bateaux
 def pointeurJ1(event):
     global bateaux1
     global bateau
@@ -280,7 +280,7 @@ def pointeurJ1(event):
     else:
         showerror('Erreur', 'Vous n\'êtes pas sur le plateau de jeu')
 
-#Detection souris J2
+#Detection souris J2 pour placer les bateaux
 def pointeurJ2(event):
     global bateaux2
     global bateau
@@ -774,7 +774,7 @@ def IA(degre):
                         bateaux2[y+1,x]=8
                         bateau=10
     gm2()
-#=================================================================================
+#===============================================================================================================================
 # PointeurIAJ1
 # Variables:
 # bateaux1: Matrice bateau 1
@@ -787,8 +787,8 @@ def IA(degre):
 # y1: vérification plus de bateau vers le haut
 # y2: vérification plus de bateau vers le bas
 # xy: retirer si la case que l'on s'apprête a tester est déjà touchée/à l'eau
-# IsShotNear: IA difficultée difficile: Vérifie si il ne tire pas inutilement
-#=================================================================================
+# IsShotNear: IA difficultée difficile: Vérifie si il ne tire pas inutilement (dans un trou où aucun bateau ne peut se trouver)
+#===============================================================================================================================
 def pointeurIAJ1(event):
     global bateaux1
     global bateaux2
