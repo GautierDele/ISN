@@ -1512,6 +1512,8 @@ def reset_affichage():
     BoutonFacile.place_forget()
     BoutonMoyen.place_forget()
     BoutonDifficile.place_forget()
+    Boutonsuivant.place_forget()
+    Boutonprec.place_forget()
 
     window1.unbind('<Button-1>')
     window1.unbind('<Button-3>')
